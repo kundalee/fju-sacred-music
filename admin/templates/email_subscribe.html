@@ -1,0 +1,87 @@
+<!-- {^if $full_page^} -->
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="EMailSubscribe"^} -->
+<form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="list-form">
+<input type="hidden" name="action" value="">
+<div id="list-div" data-remove-text="您確認要刪除這筆資料嗎？" data-record-count='{^$record_count^}' data-page-count='{^$page_count^}' data-filter='{^$filter|default|json_encode^}'>
+<!-- {^/if^} -->
+  <div class="panel table-light"{^if not $full_page^} assign-query-info="{^$query_info|default^}" assign-gzip-enabled="{^$gzip_enabled|default^}" assign-memory-info="{^$memory_info|default^}"{^/if^}>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center px-width-30 hidden-xs hidden-sm">
+            <label class="custom-checkbox">
+              <input type="checkbox" data-row-multi="true" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+            </label>
+          </th>
+          <th data-field-sort="rec_src" class="text-center px-width-100">
+            <span class="pull-right"><i class="fas fa-sort-amount{^$sort_rec_src|default^}"></i></span>
+            來源
+          </th>
+          <th data-field-sort="email" class="text-center">
+            <span class="pull-right"><i class="fas fa-sort-amount{^$sort_email|default^}"></i></span>
+            電子郵件
+          </th>
+          <th data-field-sort="status" class="text-center px-width-100 hidden-xs">
+            <span class="pull-right"><i class="fas fa-sort-amount{^$sort_status|default^}"></i></span>
+            狀態
+          </th>
+          <th data-field-sort="subscribe_time" class="text-center px-width-160 hidden-xs hidden-sm">
+            <span class="pull-right"><i class="fas fa-sort-amount{^$sort_subscribe_time|default^}"></i></span>
+            訂閱時間
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- {^foreach from=$item_arr item=item^} -->
+        <tr data-item-id="{^$item.id^}" data-item-args="{'rec_src':'{^$item.rec_src|default:'site'^}'}">
+          <td class="text-center hidden-xs hidden-sm">
+            <label class="custom-checkbox">
+              <input type="checkbox" name="checkboxes[{^$item.rec_src^}][]" value="{^$item.id^}" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+            </label>
+          </td>
+          <td class="text-center">
+            <!-- {^if $item.rec_src eq 'member'^} -->
+            會員訂閱
+            <!-- {^else^} -->
+            網站訂閱
+            <!-- {^/if^} -->
+          </td>
+          <td>{^$item.email^}</td>
+          <td class="text-center hidden-xs">
+            <!-- {^if $item.rec_src eq 'site'^} -->
+            <!-- {^if $item.status eq $smarty.const.ES_CONFIRMED^} -->
+            已確認
+            <!-- {^elseif $item.status eq $smarty.const.ES_UNSUBSCRIBE^} -->
+            退訂
+            <!-- {^else^} -->
+            未確認
+            <!-- {^/if^} -->
+            <!-- {^/if^} -->
+          </td>
+          <td class="text-center hidden-xs hidden-sm">{^$item.subscribe_time|format_date:'time_format'^}</td>
+        </tr>
+        <!-- {^foreachelse^} -->
+        <tr><td class="no-records" colspan="5">目前沒有任何記錄</td></tr>
+        <!-- {^/foreach^} -->
+      </tbody>
+    </table>
+  </div>
+  <div class="pull-left hidden-xs hidden-sm">
+    <button type="submit" id="btnSubmit1" data-form-action="batch_unsubscribe" class="btn btn-danger btn-sm" disabled>
+      退訂
+    </button>
+    <button type="submit" id="btnSubmit2" data-form-action="batch_confirm" class="btn btn-danger btn-sm" disabled>
+      確認
+    </button>
+    <button type="submit" id="btnSubmit3" data-form-action="batch_remove" class="btn btn-danger btn-sm" disabled>
+      刪除
+    </button>
+  </div>
+  <div class="pull-right text-right">{^include file="common/page.html"^}</div>
+<!-- {^if $full_page^} -->
+</div>
+</form>
+<!-- {^/if^} -->

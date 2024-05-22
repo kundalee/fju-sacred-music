@@ -1,0 +1,17 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="SQLForm"^} -->
+<div class="alert alert-warning">執行 SQL 將直接操作數據庫，請謹慎使用</div>
+<div class="panel">
+  <form method="post" name="the-form" class="form-horizontal">
+  <input type="hidden" name="action" value="query">
+  <div class="panel-body">
+    <textarea name="sql" rows="6" class="form-control autosize">{^$sql^}</textarea>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-danger btn-lg">
+      <i class="fas fa-exclamation fa-fw"></i>
+      執行
+    </button>
+  </div>
+  </form>
+</div>

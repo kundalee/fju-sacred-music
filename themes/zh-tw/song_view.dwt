@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!-- Meta -->
+{^assign
+  var="nav_breadcrumb"
+  value=[
+    ['text'=>'歌曲專區'],
+    ['text'=>($data.page_title|default:$data.zh_song_title|default:$data.en_song_title_1|default:$data.en_song_title_2|escape)]
+  ]
+^}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="{^$keywords|default^}">
+<meta name="description" content="{^$description|default|strip:''^}">
+<meta name="twitter:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta name="twitter:keywords" content="{^$keywords|default^}">
+<meta name="twitter:description" content="{^$description|default|strip:''^}">
+<meta name="twitter:site" content="{^link^}">
+<meta property="og:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta property="og:keywords" content="{^$keywords|default^}">
+<meta property="og:description" content="{^$description|default|strip:''^}">
+<meta property="og:url" content="{^link^}">
+<title>{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}</title>
+<base href="{^insert name='base_url' nocache=true^}" data-theme="{^$theme_dir|default^}" data-lang="{^$lang_code|default^}">
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon">
+<link href="favicon.ico" rel="shortcut icon">
+<link href="favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
+<link href="favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
+<link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+<link href="site.webmanifest" rel="manifest">
+<!-- Web Fonts -->
+<!-- CSS RWD Core -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- CSS Plugins -->
+<link href="assets/css/plugins.min.css" rel="stylesheet">
+<!-- CSS Customization -->
+<link href="assets/css/custom.min.css" rel="stylesheet">
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_head|default^}
+{^$data.stats_code_head|default^}
+<!-- {^/if^} -->
+</head>
+<body>
+<main>
+  <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+  <div class="body-container">
+    <div class="page-banner-frame" data-parallax="scroll" data-image-src="assets/images/page-banner-03.jpg">
+      <div class="mask"></div>
+      <h1>歌曲專區</h1>
+    </div>
+    <section class="info-wrapper">
+      <div class="global-headline">歌曲資料</div>
+      <div class="py-2">
+        <div class="row">
+          <div class="col-md-5 mb-4">
+            <div class="picture-frame">
+              <!-- {^if $data.picture_large and $data.show_img^} -->
+              <img src="{^$data.picture_large^}" alt="{^$data.zh_song_title|default:$data.en_song_title_1|default:$data.en_song_title_2|escape^}">
+              <!-- {^else^} -->
+              <img src="assets/images/default-image-song-645x645.png" alt="{^$data.zh_song_title|default:$data.en_song_title_1|default:$data.en_song_title_2|escape^}">
+              <!-- {^/if^} -->
+            </div>
+          </div>
+          <div class="col-md-7 mb-4">
+            <div class="item-frame">
+              <!-- {^if $data.zh_song_title^} -->
+              <dl class="list-item">
+                <dt class="name">歌曲名稱：</dt>
+                <dd class="value">{^$data.zh_song_title|escape^}{^if $data.focus_id and not $view_focus|default:0^} (本歌曲已收錄至<a href="{^$data.focus_url^}">重點歌曲</a>){^assign var="view_focus" value=1^}{^/if^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.en_song_title_1^} -->
+              <dl class="list-item">
+                <dt class="name">外文歌名１：</dt>
+                <dd class="value">{^$data.en_song_title_1|escape^}{^if $data.focus_id and not $view_focus|default:0^} (本歌曲已收錄至<a href="{^$data.focus_url^}">重點歌曲</a>){^assign var="view_focus" value=1^}{^/if^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.en_song_title_2^} -->
+              <dl class="list-item">
+                <dt class="name">外文歌名２：</dt>
+                <dd class="value">{^$data.en_song_title_2|escape^}{^if $data.focus_id and not $view_focus|default:0^} (本歌曲已收錄至<a href="{^$data.focus_url^}">重點歌曲</a>){^assign var="view_focus" value=1^}{^/if^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.lyricist_name^} -->
+              <dl class="list-item">
+                <dt class="name">作詞者：</dt>
+                <dd class="value">{^$data.lyricist_name|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.composer_name^} -->
+              <dl class="list-item">
+                <dt class="name">作曲者：</dt>
+                <dd class="value">{^$data.composer_name|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.song_theme^} -->
+              <dl class="list-item">
+                <dt class="name">主題分類：</dt>
+                <dd class="value">{^$data.song_theme|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.tune_name^} -->
+              <dl class="list-item">
+                <dt class="name">調名：</dt>
+                <dd class="value">{^$data.tune_name|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.first_melody^} -->
+              <dl class="list-item">
+                <dt class="name">首句旋律：</dt>
+                <dd class="value">{^$data.first_melody|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.first_lyric^} -->
+              <dl class="list-item">
+                <dt class="name">首句歌詞：</dt>
+                <dd class="value">{^$data.first_lyric|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.copyright^} -->
+              <dl class="list-item">
+                <dt class="name">版權：</dt>
+                <dd class="value">{^$data.copyright|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+            </div>
+          </div>
+        </div>
+
+        <!-- {^if $data.reference or $data.sheet_music_num or $data.hymn_music_num^} -->
+        <div class="textarea-frame">
+          <div class="row">
+            <!-- {^if $data.reference^} -->
+            <div class="col-md-6">
+              <div class="s-title">參考經文：</div>
+              <div class="s-text">{^$data.reference|escape^}</div>
+            </div>
+            <!-- {^/if^} -->
+            <!-- {^if $data.sheet_music_num or $data.hymn_music_num^} -->
+            <div class="col-md-6">
+              <!-- {^if $data.sheet_music_num^} -->
+              <div class="s-title">輕歌讚主榮頁碼：</div>
+              <div class="s-text">{^$data.sheet_music_num|escape^}</div>
+              <!-- {^/if^} -->
+              <!-- {^if $data.hymn_music_num^} -->
+              <div class="s-title">遣使會聖歌選集頁碼：</div>
+              <div class="s-text">{^$data.hymn_music_num|escape^}</div>
+              <!-- {^/if^} -->
+            </div>
+            <!-- {^/if^} -->
+          </div>
+        </div>
+        <!-- {^/if^} -->
+      </div>
+
+      <div class="global-headline">收錄歌本</div>
+      <table class="table list-table-themes">
+        <thead>
+          <tr>
+            <th>書本名稱</th>
+            <th class="w-px-80">頁碼</th>
+            <th class="w-px-80">編號</th>
+            <th class="w-px-200">編者</th>
+            <th class="w-px-400">標籤</th>
+          </tr>
+        </thead>
+
+        <!-- {^foreach from=$relation_book item=item name=list^} -->
+        <tbody>
+          <tr>
+            <td class="child-title" data-title="書本名稱："><a href="{^$item.url^}">{^$item.book_title|escape^}</a></td>
+            <td class="child-title text-lg-center" data-title="頁碼：">{^$item.page_code|escape^}</td>
+            <td class="child-title text-lg-center" data-title="編號：">{^$item.sort_order|escape^}</td>
+            <td class="child-title" data-title="編者：">{^$item.author|escape^}</td>
+            <td class="child-title" data-title="標籤：">
+              <div>
+                <!-- {^if $item.relation_tags^} -->
+                <ul class="td-tags">
+                  <!-- {^foreach from=$item.relation_tags item=item^} -->
+                  <li><a title="{^$item.tag_name|escape^}" href="{^$item.url^}">{^$item.tag_name|escape^}</a></li>
+                  <!-- {^/foreach^} -->
+                </ul>
+                <!-- {^/if^} -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <!-- {^/foreach^} -->
+
+      </table>
+    </section>
+  </div>
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</main>
+<script async src="assets/js/plugins/require.min.js" data-main="assets/js/require-config.js"></script>
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_body|default^}
+{^$data.stats_code_body|default^}
+<!-- {^/if^} -->
+</body>
+</html>

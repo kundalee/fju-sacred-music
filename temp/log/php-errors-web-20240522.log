@@ -1,0 +1,19 @@
+[22-May-2024 17:05:57 Asia/Taipei] PHP Deprecated:  Optional parameter $params declared before required parameter $template is implicitly treated as a required parameter in /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/lib_smarty.php on line 1104
+[22-May-2024 17:05:57 Asia/Taipei] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'website_cchd_fju'@'localhost' (using password: NO) in /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/cls_mysqli.php:132
+Stack trace:
+#0 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/cls_mysqli.php(132): mysqli->__construct()
+#1 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/cls_mysqli.php(1515): cls_mysql->connect()
+#2 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/cls_mysqli.php(322): cls_mysql->reconnect()
+#3 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/cls_mysqli.php(781): cls_mysql->query()
+#4 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/cls_mysqli.php(798): cls_mysql->selectLimit()
+#5 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/cls_mysqli.php(928): cls_mysql->getOne()
+#6 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/lib_common.php(1819): cls_mysql->getOneCached()
+#7 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/lib_common.php(1046): getDefaultLangId()
+#8 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/init.php(196): loadConfig()
+#9 /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/index.php(6): require('...')
+#10 {main}
+  thrown in /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/cls_mysqli.php on line 132
+[22-May-2024 17:06:30 Asia/Taipei] PHP Deprecated:  Optional parameter $params declared before required parameter $template is implicitly treated as a required parameter in /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/includes/lib_smarty.php on line 1104
+[22-May-2024 17:06:30 Asia/Taipei] PHP Deprecated:  Function strftime() is deprecated in /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/vendor/smarty/smarty/libs/sysplugins/smarty_internal_runtime_codeframe.php on line 48
+[22-May-2024 17:06:30 Asia/Taipei] PHP Deprecated:  Function strftime() is deprecated in /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/vendor/smarty/smarty/libs/sysplugins/smarty_internal_runtime_codeframe.php on line 48
+[22-May-2024 17:06:30 Asia/Taipei] PHP Deprecated:  Function strftime() is deprecated in /media/rddd/242438d5-0d71-4648-99bc-7c839d703f11/Rddd/ChihHe-Projects/fju-sacred-music/vendor/smarty/smarty/libs/sysplugins/smarty_internal_runtime_codeframe.php on line 48

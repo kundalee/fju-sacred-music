@@ -1,0 +1,115 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="FlowStats"^} -->
+<div class="panel">
+  <div class="panel-heading">
+    <span class="panel-title">
+      <i class="fas fa-search fa-fw"></i>
+    </span>
+  </div>
+  <div class="panel-main">
+    <div class="panel-body">
+
+      <form method="post" name="search-form" action="{^$smarty.server.SCRIPT_FILENAME|basename^}">
+      <div class="input-daterange input-group" data-plugins="datepicker">
+        <input type="text" class="form-control" name="start_date" value="{^$start_date^}">
+        <span class="input-group-addon">
+          <i class="fas fa-exchange-alt"></i>
+        </span>
+        <input type="text" class="form-control" name="end_date" value="{^$end_date^}">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-default">
+            <i class="fas fa-calendar-alt fa-fw"></i>
+            <span class="hidden-xs">&nbsp;時段查詢</span>
+          </button>
+        </span>
+      </div>
+      </form>
+
+      <div class="space-6"></div>
+
+      <form method="post" name="search-form" action="{^$smarty.server.SCRIPT_FILENAME|basename^}" class="form-inline">
+      <input type="hidden" name="is_multi" value="1">
+      <!-- {^foreach from=$start_date_arr item=start_date key=k^} -->
+
+      <input type="text" name="year_month[]" value="{^$start_date^}" class="text-center form-control px-width-100 inline" data-plugins="datepicker" data-options="{'format':'YYYY-MM','viewMode':'months'}">
+
+      <!-- {^/foreach^} -->
+      <button type="submit" class="btn btn-info">
+        <i class="fas fa-calendar-alt fa-fw"></i>
+        <span>&nbsp;年月查詢</span>
+      </button>
+      </form>
+
+    </div>
+  </div>
+</div>
+<div class="space-10"></div>
+<div class="panel">
+  <div id="stats-page-content-area" class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs">
+      <li>
+        <a href="#view-general">
+          <i class="fas fa-chart-line fa-fw"></i>
+          綜合到訪量
+        </a>
+      </li>
+      <li>
+        <a href="#view-area">
+          <!-- {^if $is_multi^} -->
+          <i class="fas fa-chart-bar fa-fw"></i>
+          <!-- {^else^} -->
+          <i class="fas fa-chart-pie fa-fw"></i>
+          <!-- {^/if^} -->
+          地區分佈
+        </a>
+      </li>
+      <li>
+        <a href="#view-from">
+          <!-- {^if $is_multi^} -->
+          <i class="fas fa-chart-bar fa-fw"></i>
+          <!-- {^else^} -->
+          <i class="fas fa-chart-pie fa-fw"></i>
+          <!-- {^/if^} -->
+          來源網站
+        </a>
+      </li>
+      <li>
+        <a href="#view-browser">
+          <!-- {^if $is_multi^} -->
+          <i class="fas fa-chart-bar fa-fw"></i>
+          <!-- {^else^} -->
+          <i class="fas fa-chart-pie fa-fw"></i>
+          <!-- {^/if^} -->
+          瀏覽器統計
+        </a>
+      </li>
+      <li>
+        <a href="#view-system">
+          <!-- {^if $is_multi^} -->
+          <i class="fas fa-chart-bar fa-fw"></i>
+          <!-- {^else^} -->
+          <i class="fas fa-chart-pie fa-fw"></i>
+          <!-- {^/if^} -->
+          作業系統統計
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="view-general" class="tab-pane in active">
+        <div id="chart-view" data-toggle="chart" data-multi="{^if $is_multi^}true{^else^}false{^/if^}" data-table='{^$stats.flow.option|json_encode^}' class="reset-box-sizing"></div>
+      </div>
+      <div id="view-area" class="tab-pane">
+        <div id="chart-area" data-toggle="chart" data-multi="{^if $is_multi^}true{^else^}false{^/if^}" data-table='{^$stats.area.option|json_encode^}' class="reset-box-sizing"></div>
+      </div>
+      <div id="view-from" class="tab-pane">
+        <div id="chart-from" data-toggle="chart" data-multi="{^if $is_multi^}true{^else^}false{^/if^}" data-table='{^$stats.referer_domain.option|json_encode^}' class="reset-box-sizing"></div>
+      </div>
+      <div id="view-browser" class="tab-pane">
+        <div id="chart-browser" data-toggle="chart" data-multi="{^if $is_multi^}true{^else^}false{^/if^}" data-table='{^$stats.browser.option|json_encode^}' class="reset-box-sizing"></div>
+      </div>
+      <div id="view-system" class="tab-pane">
+        <div id="chart-system" data-toggle="chart" data-multi="{^if $is_multi^}true{^else^}false{^/if^}" data-table='{^$stats.system.option|json_encode^}' class="reset-box-sizing"></div>
+      </div>
+    </div>
+  </div>
+</div>

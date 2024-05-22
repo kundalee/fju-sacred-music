@@ -1,0 +1,66 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="MailTemplateForm"^} -->
+<div class="panel">
+  <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="the-form" class="form-horizontal">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <input type="hidden" name="template_id" value="{^$data.template_id^}">
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs"{^if $data.template_id^} data-page-code="{^$smarty.const.SCRIPT_NAME^}-id-{^$data.template_id^}"{^/if^}>
+      <li>
+        <a href="#edit-general">
+          <i class="fas fa-edit fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+      <li>
+        <a href="#edit-content">
+          <i class="far fa-file-alt fa-fw"></i>
+          樣版內容
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group has-info">
+              <label class="col-md-2 control-label no-padding-right">郵件標題</label>
+              <div class="col-md-10">
+                <input type="text" name="template_subject" value="{^$data.template_subject|default|escape^}" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">郵件代碼</label>
+              <div class="col-md-10">
+                <!-- {^sys^} -->
+                <input type="text" name="template_code" value="{^$data.template_code^}" class="form-control">
+                <!-- {^syselse^} -->
+                <p class="form-control-static">{^$data.template_code^}</p>
+                <input type="hidden" name="template_code" value="{^$data.template_code^}">
+                <!-- {^/sys^} -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="edit-content" class="tab-pane">
+        <div class="space-6"></div>
+        <div class="form-group">
+          <div class="col-md-12">
+            <textarea name="template_content" rows="10" class="form-control loadCKEditor" data-load-init="build.DU" data-plugins="ckeditor">{^$data.template_content|default|escape:'html'^}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

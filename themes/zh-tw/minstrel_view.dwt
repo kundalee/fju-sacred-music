@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!-- Meta -->
+{^assign
+  var="nav_breadcrumb"
+  value=[
+    ['text'=>'創作者專區'],
+    ['text'=>($data.page_title|default:$data.chinese_name|default:$data.original_name|escape)]
+  ]
+^}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="{^$keywords|default^}">
+<meta name="description" content="{^$description|default|strip:''^}">
+<meta name="twitter:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta name="twitter:keywords" content="{^$keywords|default^}">
+<meta name="twitter:description" content="{^$description|default|strip:''^}">
+<meta name="twitter:site" content="{^link^}">
+<meta property="og:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta property="og:keywords" content="{^$keywords|default^}">
+<meta property="og:description" content="{^$description|default|strip:''^}">
+<meta property="og:url" content="{^link^}">
+<title>{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}</title>
+<base href="{^insert name='base_url' nocache=true^}" data-theme="{^$theme_dir|default^}" data-lang="{^$lang_code|default^}">
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon">
+<link href="favicon.ico" rel="shortcut icon">
+<link href="favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
+<link href="favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
+<link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+<link href="site.webmanifest" rel="manifest">
+<!-- Web Fonts -->
+<!-- CSS RWD Core -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- CSS Plugins -->
+<link href="assets/css/plugins.min.css" rel="stylesheet">
+<!-- CSS Customization -->
+<link href="assets/css/custom.min.css" rel="stylesheet">
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_head|default^}
+{^$data.stats_code_head|default^}
+<!-- {^/if^} -->
+</head>
+<body>
+<main>
+  <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+  <div class="body-container">
+    <div class="page-banner-frame" data-parallax="scroll" data-image-src="assets/images/page-banner-04.jpg">
+      <div class="mask"></div>
+      <h1>創作者專區</h1>
+    </div>
+    <section class="info-wrapper">
+      <div class="global-headline">創作者專區</div>
+      <div class="py-2">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="picture-frame">
+              <!-- {^if $data.picture_large^} -->
+              <img src="{^$data.picture_large^}" alt="{^$data.chinese_name|default:$data.original_name|escape^}">
+              <!-- {^else^} -->
+              <img src="assets/images/default-700x700.png" alt="{^$data.chinese_name|default:$data.original_name|escape^}">
+              <!-- {^/if^} -->
+            </div>
+          </div>
+          <div class="col-md-8 mb-4">
+            <div class="item-frame">
+              <dl class="list-item">
+                <dt class="name">中文姓名：</dt>
+                <dd class="value">{^$data.chinese_name|escape^}</dd>
+              </dl>
+              <!-- {^if $data.birthday_date^} -->
+              <dl class="list-item">
+                <dt class="name">出生年：</dt>
+                <dd class="value">{^$data.birthday_date|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.doom_date^} -->
+              <dl class="list-item">
+                <dt class="name">逝世年：</dt>
+                <dd class="value">{^$data.doom_date|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.brief_info^} -->
+              <dl class="list-item">
+                <dt class="name">作曲家介紹：</dt>
+                <dd class="value">{^$data.brief_info|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+              <!-- {^if $data.nationality^} -->
+              <dl class="list-item">
+                <dt class="name">國籍：</dt>
+                <dd class="value">{^$data.nationality|escape^}</dd>
+              </dl>
+              <!-- {^/if^} -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="global-headline">歌曲訊息</div>
+      <table class="table list-table-themes">
+        <thead>
+          <tr>
+            <th>歌曲名稱</th>
+            <th>書本名稱</th>
+            <th class="w-px-400">標籤</th>
+          </tr>
+        </thead>
+        <!-- {^foreach from=$relation_song item=item name=list^} -->
+        <tbody>
+          <tr>
+            <td class="child-title" data-title="歌曲名稱："><a title="{^$item.zh_song_title|default:$item.en_song_title_1|default:$item.en_song_title_2|escape^}" href="{^$item.song_url^}">{^$item.zh_song_title|default:$item.en_song_title_1|default:$item.en_song_title_2|escape^}</a></td>
+            <td class="child-title" data-title="書本名稱：">{^if $item.book_url|default^}<a title="{^$item.book_title|escape^}" href="{^$item.book_url^}">{^$item.book_title|escape^}</a>{^/if^}</td>
+            <td class="child-title" data-title="標籤：">
+              <div>
+                <!-- {^if $item.relation_tags^} -->
+                <ul class="td-tags">
+                  <!-- {^foreach from=$item.relation_tags item=item^} -->
+                  <li><a title="{^$item.tag_name|escape^}" href="{^$item.url^}">{^$item.tag_name|escape^}</a></li>
+                  <!-- {^/foreach^} -->
+                </ul>
+                <!-- {^/if^} -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <!-- {^/foreach^} -->
+      </table>
+    </section>
+  </div>
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</main>
+<script async src="assets/js/plugins/require.min.js" data-main="assets/js/require-config.js"></script>
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_body|default^}
+{^$data.stats_code_body|default^}
+<!-- {^/if^} -->
+</body>
+</html>

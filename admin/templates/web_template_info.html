@@ -1,0 +1,409 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="WebTemplateForm"^} -->
+<div class="panel">
+  <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="the-form" class="form-horizontal">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <input type="hidden" name="tpl_id" value="{^$data.tpl_id^}">
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs">
+      <li>
+        <a href="#edit-general">
+          <i class="fas fa-edit fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+      <!-- {^foreach from=$group_list item=group name=body_group^} -->
+      <li>
+        <a href="#edit-config-{^$group.code^}">
+          <i class="fas fa-cog fa-fw"></i>
+          {^$group.name^}
+        </a>
+      </li>
+      <!-- {^/foreach^} -->
+    </ul>
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">文案名稱</label>
+                  <div class="col-md-8">
+                    <!-- {^sys^} -->
+                    <input type="text" name="tpl_name" value="{^$data.tpl_name|escape^}" class="form-control">
+                    <!-- {^syselse^} -->
+                    <input type="text" name="tpl_name" value="{^$data.tpl_name|escape^}" class="form-control" readonly>
+                    <!-- {^/sys^} -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">代碼</label>
+                  <div class="col-md-8">
+                    <!-- {^sys^} -->
+                    <input type="text" name="tpl_code" value="{^$data.tpl_code|default|escape^}" class="form-control">
+                    <!-- {^syselse^} -->
+                    <input type="text" name="tpl_code" value="{^$data.tpl_code|default|escape^}" class="form-control" readonly>
+                    <!-- {^/sys^} -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- {^sys^} -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">是否顯示</label>
+                  <div class="col-md-8">
+                    <label class="switcher switcher-rounded switcher-blank">
+                      <input type="checkbox" data-cell-toggle="show"{^if $data.is_show eq 1^} checked{^/if^}>
+                      <div class="switcher-indicator">
+                        <div class="switcher-yes">
+                          <i class="fas fa-check"></i>
+                        </div>
+                        <div class="switcher-no">
+                          <i class="fas fa-times"></i>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- {^/sys^} -->
+          </div>
+        </div>
+      </div>
+      <!-- {^foreach from=$group_list item=group name=body_group^} -->
+      <div id="edit-{^$group.code^}" class="tab-pane">
+        <!-- {^if isset($group.langs)^} -->
+        <!-- {^if count($languages) eq 1^} -->
+        <div class="space-6"></div>
+        <!-- {^/if^} -->
+        <div class="tabbable">
+          <!-- {^if count($languages) gt 1^} -->
+          <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs">
+            <!-- {^foreach from=$languages item=item key=key^} -->
+            <!-- {^if isset($group.langs[$key])^} -->
+            <li>
+              <a href="#">
+                {^$item.name|escape^}
+              </a>
+            </li>
+            <!-- {^/if^} -->
+            <!-- {^/foreach^} -->
+          </ul>
+          <!-- {^/if^} -->
+          <div class="tab-content no-padding">
+            <!-- {^foreach from=$languages item=item key=key name=lang^} -->
+            <!-- {^if isset($group.langs[$key])^} -->
+            <div class="tab-pane{^if $smarty.foreach.lang.first^} in active{^/if^}">
+              <!-- {^if $smarty.foreach.lang.total neq 1^} -->
+              <div class="space-10"></div>
+              <!-- {^/if^} -->
+              <div class="row">
+                <!-- {^foreach from=$group.langs[$key] item=var^} -->
+                <!-- {^if $var.type eq 'ckeditor'^} -->
+                <div class="col-md-12">
+                  <!-- {^if $var.desc^} -->
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {^$var.desc|nl2br^}
+                  </div>
+                  <!-- {^/if^} -->
+                  <div class="form-group">
+                    <label class="col-md-12 custom-checkbox">
+                      <!-- {^sys^} -->
+                      <input type="checkbox" name="config[is_display][{^$var.lang_id^}][{^$var.code^}]" value="1" class="custom-control-input"{^if $var.is_display^} checked{^/if^}>
+                      <span class="custom-control-indicator"></span>
+                      &nbsp;
+                      <!-- {^syselse^} -->
+                      <input type="hidden" name="config[is_display][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.is_display^}">
+                      <!-- {^/sys^} -->
+                      {^$var.name^}
+                    </label>
+                    <div class="col-md-12">
+                      <textarea name="config[value][{^$var.lang_id^}][{^$var.code^}]" rows="10" data-plugins="ckeditor" class="form-control" data-settings='{"toolbar":"{^$var.field_size^}"}'>{^$var.value|default|escape:'html'^}</textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- {^else^} -->
+                <div class="col-lg-11">
+                  <div class="form-group">
+                    <label class="col-md-2 control-label custom-checkbox">
+                      <!-- {^sys^} -->
+                      <input type="checkbox" name="config[is_display][{^$var.lang_id^}][{^$var.code^}]" value="1" class="custom-control-input"{^if $var.is_display^} checked{^/if^}>
+                      <span class="custom-control-indicator"></span>
+                      &nbsp;
+                      <!-- {^syselse^} -->
+                      <input type="hidden" name="config[is_display][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.is_display^}">
+                      <!-- {^/sys^} -->
+                      {^$var.name^}
+                    </label>
+
+                    <div class="col-md-10">
+                      <!-- {^if $var.type eq 'text'^} -->
+                      <input type="text" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.value|escape^}" class="form-control">
+                      <!-- {^elseif $var.type eq 'selectize-text'^} -->
+                      <input type="text" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.value|escape^}" data-plugins="selectize-text" class="form-control">
+                      <!-- {^elseif $var.type eq 'selectize-email'^} -->
+                      <input type="text" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.value|escape^}" data-plugins="selectize-email" class="form-control">
+                      <!-- {^elseif $var.type eq 'slider'^} -->
+                      <input type="text" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.value|escape^}" data-plugins="ion-range-slider" data-defval="{^$var.value|escape^}" data-options="{^$var.config^}">
+                      <!-- {^elseif $var.type eq 'color'^} -->
+                      <input type="text" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.value|escape^}" data-plugins="minicolors" class="form-control">
+                      <!-- {^elseif $var.type eq 'password'^} -->
+                      <input type="password" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.value^}" class="form-control">
+                      <!-- {^elseif $var.type|in_array:['file', 'image']^} -->
+                      <input type="hidden" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$var.value^}">
+                      <!-- {^if $var.type eq 'image'^} -->
+                      <div class="row">
+                        <div class="col-md-4">
+                          <button type="button" data-load-init="performed" data-file-upload="config[value][{^$var.lang_id^}][{^$var.code^}]" data-upload-mime-types='[{"title":"Image files","extensions":"jpg,gif,png,jpeg"}]' data-upload-max-file-size="10mb" data-element-options="{'showUploadButton':true,'doneProgress':true}" class="btn btn-primary btn-block">
+                            <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                            選擇檔案
+                          </button>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="file-list"></div>
+                        </div>
+                      </div>
+                      <!-- {^if $var.value^} -->
+                      <p class="help-block no-margin-bottom picture-file-help">
+                        你已經上傳過圖案，再次上傳時將覆蓋原圖案！
+                        <a href="{^$smarty.const.BASE_URL^}{^$var.value^}" data-plugins="magnific-popup" target="_blank" class="btn btn-outline btn-xs">
+                          <i class="grey far fa-image fa-fw"></i>
+                          放大
+                        </a>
+                        <a href="#" data-toggle="remove" data-args="{^['code'=>$var.code,'lang_id'=>$var.lang_id]|format_array_to_htmljson^}" class="btn btn-outline btn-xs btn-danger">
+                          <i class="fas fa-trash-alt fa-fw"></i>
+                          刪除
+                        </a>
+                      </p>
+                      <!-- {^/if^} -->
+                      <!-- {^else^} -->
+                      <div class="row">
+                        <div class="col-md-4">
+                          <button type="button" data-load-init="performed" data-file-upload="config[value][{^$var.lang_id^}][{^$var.code^}]" class="btn btn-primary btn-block">
+                            <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                            選擇檔案
+                          </button>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="file-list"></div>
+                        </div>
+                      </div>
+                      <!-- {^if $var.value^} -->
+                      <p class="help-block no-margin-bottom picture-file-help">
+                        你已經上傳過檔案，再次上傳時將覆蓋原檔案！
+                        <a href="{^$smarty.const.BASE_URL^}{^$var.value^}" target="_blank" class="btn btn-outline btn-xs">
+                          <i class="grey fas fa-eye fa-fw"></i>
+                          下載
+                        </a>
+                        <a href="#" data-toggle="remove" data-args="{^['code'=>$var.code,'lang_id'=>$var.lang_id]|format_array_to_htmljson^}" class="btn btn-outline btn-xs">
+                          <i class="fas fa-trash-alt fa-fw btn-danger"></i>
+                          刪除
+                        </a>
+                      </p>
+                      <!-- {^/if^} -->
+                      <!-- {^/if^} -->
+                      <!-- {^elseif $var.type eq 'textarea'^} -->
+                      <textarea name="config[value][{^$var.lang_id^}][{^$var.code^}]" rows="{^$var.field_size.rows|default:5^}" class="form-control">{^$var.value|escape^}</textarea>
+                      <!-- {^elseif $var.type eq 'options'^} -->
+                      <select name="config[value][{^$var.lang_id^}][{^$var.code^}]" class="form-control">
+                        <!-- {^foreach from=$var.store_options key=key item=opt^} -->
+                        <option value="{^$opt.value^}"{^if $var.value eq $opt.value^} selected{^/if^}>{^$opt.name^}</option>
+                        <!-- {^/foreach^} -->
+                      </select>
+                      <!-- {^elseif $var.type eq 'select'^} -->
+                      <!-- {^foreach from=$var.store_options key=key item=opt^} -->
+                      <label class="custom-radio radio-inline">
+                        <!-- {^if $var.value eq $opt.value^} -->
+                        <input type="radio" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$opt.value^}" id="{^$var.code^}_value_{^$var.lang_id^}_{^$var.id^}_{^$key^}" class="custom-control-input" checked>
+                        <!-- {^else^} -->
+                        <input type="radio" name="config[value][{^$var.lang_id^}][{^$var.code^}]" value="{^$opt.value^}" id="{^$var.code^}_value_{^$var.lang_id^}_{^$var.id^}_{^$key^}" class="custom-control-input">
+                        <!-- {^/if^} -->
+                        <span class="custom-control-indicator"></span>
+                        &nbsp;{^$opt.name^}
+                      </label>
+                      <!-- {^/foreach^} -->
+                      <!-- {^/if^} -->
+                      <!-- {^if $var.desc^} -->
+                      <p class="help-block text-muted small">{^$var.desc|nl2br^}</p>
+                      <!-- {^/if^} -->
+                    </div>
+                  </div>
+                </div>
+                <!-- {^/if^} -->
+                <!-- {^/foreach^} -->
+              </div>
+            </div>
+            <!-- {^/if^} -->
+            <!-- {^/foreach^} -->
+          </div>
+        </div>
+        <!-- {^/if^} -->
+
+        <!-- {^if isset($group.vars)^} -->
+        <!-- {^if isset($group.langs)^} -->
+        <!-- {^if count($languages) gt 1^} -->
+        <h4 class="header blue bolder smaller">共用設定</h4>
+        <!-- {^/if^} -->
+        <!-- {^else^} -->
+        <div class="space-10"></div>
+        <!-- {^/if^} -->
+
+        <div class="row">
+
+          <!-- {^foreach from=$group.vars item=var^} -->
+          <!-- {^if $var.type eq 'ckeditor'^} -->
+          <div class="col-md-12">
+            <!-- {^if $var.desc^} -->
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {^$var.desc|nl2br^}
+            </div>
+            <!-- {^/if^} -->
+            <div class="form-group">
+              <label class="col-md-12 custom-checkbox">
+                <!-- {^sys^} -->
+                <input type="checkbox" name="config[is_display][0][{^$var.code^}]" value="1" class="custom-control-input"{^if $var.is_display^} checked{^/if^}>
+                <span class="custom-control-indicator"></span>
+                &nbsp;
+                <!-- {^syselse^} -->
+                <input type="hidden" name="config[is_display][0][{^$var.code^}]" value="{^$var.is_display^}">
+                <!-- {^/sys^} -->
+                {^$var.name^}
+              </label>
+              <div class="col-md-12">
+                <textarea name="config[value][0][{^$var.code^}]" rows="10" data-plugins="ckeditor" class="form-control" data-settings='{"toolbar":"{^$var.field_size^}"}'>{^$var.value|default|escape:'html'^}</textarea>
+              </div>
+            </div>
+          </div>
+          <!-- {^else^} -->
+          <div class="col-lg-11">
+            <div class="form-group">
+              <label class="col-md-2 control-label custom-checkbox">
+                <!-- {^sys^} -->
+                <input type="checkbox" name="config[is_display][0][{^$var.code^}]" value="1" class="custom-control-input"{^if $var.is_display^} checked{^/if^}>
+                <span class="custom-control-indicator"></span>
+                &nbsp;
+                <!-- {^syselse^} -->
+                <input type="hidden" name="config[is_display][0][{^$var.code^}]" value="{^$var.is_display^}">
+                <!-- {^/sys^} -->
+                {^$var.name^}
+              </label>
+              <div class="col-md-10">
+                <!-- {^if $var.type eq 'text'^} -->
+                <input type="text" name="config[value][0][{^$var.code^}]" value="{^$var.value|escape^}" class="form-control">
+                <!-- {^elseif $var.type eq 'selectize-text'^} -->
+                <input type="text" name="config[value][0][{^$var.code^}]" value="{^$var.value|escape^}" data-plugins="selectize-text" class="form-control">
+                <!-- {^elseif $var.type eq 'selectize-email'^} -->
+                <input type="text" name="config[value][0][{^$var.code^}]" value="{^$var.value|escape^}" data-plugins="selectize-email" class="form-control">
+                <!-- {^elseif $var.type eq 'slider'^} -->
+                <input type="text" name="config[value][0][{^$var.code^}]" value="{^$var.value|escape^}" data-plugins="ion-range-slider" data-defval="{^$var.value|escape^}" data-options="{^$var.config^}">
+                <!-- {^elseif $var.type eq 'color'^} -->
+                <input type="text" name="config[value][0][{^$var.code^}]" value="{^$var.value|escape^}" data-plugins="minicolors" class="form-control">
+                <!-- {^elseif $var.type eq 'password'^} -->
+                <input type="password" name="config[value][0][{^$var.code^}]" value="{^$var.value^}" class="form-control">
+                <!-- {^elseif $var.type|in_array:['file', 'image']^} -->
+                <input type="hidden" name="config[value][0][{^$var.code^}]" value="{^$var.value^}">
+                <!-- {^if $var.type eq 'image'^} -->
+                <div class="row">
+                  <div class="col-md-4">
+                    <button type="button" data-load-init="performed" data-file-upload="config[value][0][{^$var.code^}]" data-upload-mime-types='[{"title":"Image files","extensions":"jpg,gif,png,jpeg"}]' data-upload-max-file-size="10mb" data-element-options="{'showUploadButton':true,'doneProgress':true}" class="btn btn-primary btn-block">
+                      <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                      選擇檔案
+                    </button>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="file-list"></div>
+                  </div>
+                </div>
+                <!-- {^if $var.value^} -->
+                <p class="help-block no-margin-bottom picture-file-help">
+                  你已經上傳過圖案，再次上傳時將覆蓋原圖案！
+                  <a href="{^$smarty.const.BASE_URL^}{^$var.value^}" data-plugins="magnific-popup" target="_blank" class="btn btn-outline btn-xs">
+                    <i class="grey far fa-image fa-fw"></i>
+                    放大
+                  </a>
+                  <a href="#" data-toggle="remove" data-args="{^['code'=>$var.code]|format_array_to_htmljson^}" class="btn btn-outline btn-xs btn-danger">
+                    <i class="fas fa-trash-alt fa-fw"></i>
+                    刪除
+                  </a>
+                </p>
+                <!-- {^/if^} -->
+                <!-- {^else^} -->
+                <div class="row">
+                  <div class="col-md-4">
+                    <button type="button" data-load-init="performed" data-file-upload="config[value][0][{^$var.code^}]" class="btn btn-primary btn-block">
+                      <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                      選擇檔案
+                    </button>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="file-list"></div>
+                  </div>
+                </div>
+                <!-- {^if $var.value^} -->
+                <p class="help-block no-margin-bottom picture-file-help">
+                  你已經上傳過檔案，再次上傳時將覆蓋原檔案！
+                  <a href="{^$smarty.const.BASE_URL^}{^$var.value^}" target="_blank" class="btn btn-outline btn-xs">
+                    <i class="grey fas fa-eye fa-fw"></i>
+                    下載
+                  </a>
+                  <a href="#" data-toggle="remove" data-args="{^['code'=>$var.code]|format_array_to_htmljson^}" class="btn btn-outline btn-xs btn-danger">
+                    <i class="fas fa-trash-alt fa-fw"></i>
+                    刪除
+                  </a>
+                </p>
+                <!-- {^/if^} -->
+                <!-- {^/if^} -->
+
+                <!-- {^elseif $var.type eq 'textarea'^} -->
+                <textarea name="config[value][0][{^$var.code^}]" rows="{^$var.field_size.rows|default:5^}" class="form-control">{^$var.value|escape^}</textarea>
+                <!-- {^elseif $var.type eq 'options'^} -->
+                <select name="config[value][0][{^$var.code^}]" class="form-control">
+                  <!-- {^foreach from=$var.store_options key=key item=opt^} -->
+                  <option value="{^$opt.value^}"{^if $var.value eq $opt.value^} selected{^/if^}>{^$opt.name^}</option>
+                  <!-- {^/foreach^} -->
+                </select>
+                <!-- {^elseif $var.type eq 'select'^} -->
+                <!-- {^foreach from=$var.store_options key=key item=opt^} -->
+                <label class="custom-radio radio-inline">
+                  <!-- {^if $var.value eq $opt.value^} -->
+                  <input type="radio" name="config[value][0][{^$var.code^}]" value="{^$opt.value^}" id="{^$var.code^}_value_0_{^$var.id^}_{^$key^}" class="custom-control-input" checked>
+                  <!-- {^else^} -->
+                  <input type="radio" name="config[value][0][{^$var.code^}]" value="{^$opt.value^}" id="{^$var.code^}_value_0_{^$var.id^}_{^$key^}" class="custom-control-input">
+                  <!-- {^/if^} -->
+                  <span class="custom-control-indicator"></span>
+                  &nbsp;{^$opt.name^}
+                </label>
+                <!-- {^/foreach^} -->
+                <!-- {^/if^} -->
+                <!-- {^if $var.desc^} -->
+                <p class="help-block text-muted small">{^$var.desc|nl2br^}</p>
+                <!-- {^/if^} -->
+              </div>
+            </div>
+          </div>
+          <!-- {^/if^} -->
+          <!-- {^/foreach^} -->
+        </div>
+        <!-- {^/if^} -->
+      </div>
+      <!-- {^/foreach^} -->
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

@@ -1,0 +1,81 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="SYSLog"^} -->
+<div class="row">
+  <div class="col-md-12">
+    <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="list-form">
+    <input type="hidden" name="action" value="batch_remove">
+    <div id="list-div" data-remove-text="您確認要刪除這筆資料嗎？">
+      <div class="panel table-light">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center px-width-30 hidden-xs hidden-sm">
+                <label class="custom-checkbox">
+                  <input type="checkbox" data-row-multi="true" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                </label>
+              </th>
+              <th class="text-center">
+                檔案名稱
+              </th>
+              <th class="text-center px-width-160 hidden-xs hidden-sm">
+                修改時間
+              </th>
+              <th class="text-center px-width-160 hidden-xs hidden-sm">
+                操作
+              </th>
+              <th class="text-center px-width-50 visible-xs visible-sm">
+                操作
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- {^foreach from=$log_list item=log^} -->
+            <tr data-item-id="{^$log.filetoken^}">
+              <td class="text-center hidden-xs hidden-sm">
+                <label class="custom-checkbox">
+                  <input type="checkbox" name="checkboxes[]" value="{^$log.filetoken^}" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                </label>
+              </td>
+              <td>{^$log.basename|escape^}</td>
+              <td class="text-center hidden-xs hidden-sm">{^$log.filemtime|format_date:'time_format'^}</td>
+              <td class="text-center hidden-xs hidden-sm">
+                <div class="btn-group-sm">
+                  <a href="{^$smarty.server.SCRIPT_FILENAME|basename^}?action=view&token={^$log.filetoken^}" title="瀏覽" class="btn btn-outline btn-info" data-trigger="view">
+                    <i class="fas fa-search fa-fw"></i>
+                    瀏覽
+                  </a>
+                  <a href="#" title="刪除" class="btn btn-outline btn-danger btn-xs" data-item-handler="remove">
+                    <i class="fas fa-trash-alt fa-fw"></i>
+                    刪除
+                  </a>
+                </div>
+              </td>
+              <td class="text-center visible-xs visible-sm">
+                <div class="dropdown">
+                  <button type="button" class="btn btn-sm btn-outline btn-outline-colorless dropdown-toggle" data-toggle="dropdown" aria-expanded="false" data-position="auto">
+                    <i class="fas fa-bars"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <li><a href="{^$smarty.server.SCRIPT_FILENAME|basename^}?action=view&token={^$log.filetoken^}"><i class="dropdown-icon fas fa-pencil-alt fa-fw"></i>&nbsp;&nbsp;瀏覽</a></li>
+                    <li><a href="#" data-item-handler="remove"><i class="dropdown-icon fas fa-times fa-fw text-danger"></i>&nbsp;&nbsp;刪除</a></li>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <!-- {^foreachelse^} -->
+            <tr><td class="no-records" colspan="6">目前沒有任何記錄</td></tr>
+            <!-- {^/foreach^} -->
+          </tbody>
+        </table>
+      </div>
+      <div class="pull-left hidden-xs hidden-sm">
+        <button type="submit" class="btn btn-danger btn-sm" disabled>
+          批次刪除
+        </button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>

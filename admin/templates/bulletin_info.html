@@ -1,0 +1,428 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="BulletinForm"^} -->
+<div class="panel">
+  <form method="post" name="the-form" action="{^$smarty.server.SCRIPT_FILENAME|basename^}" class="form-horizontal">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <input type="hidden" name="bulletin_id" value="{^$data.bulletin_id^}">
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs"{^if $data.bulletin_id^} data-page-code="{^$smarty.const.SCRIPT_NAME^}-id-{^$data.bulletin_id^}"{^/if^}>
+      <li>
+        <a href="#edit-general">
+          <i class="fas fa-edit fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+      <li>
+        <a href="#edit-content">
+          <i class="far fa-file-alt fa-fw"></i>
+          文章內容
+        </a>
+      </li>
+      <li class="hidden">
+        <a href="#edit-related">
+          <i class="fas fa-cubes fa-fw"></i>
+          文章關聯
+        </a>
+      </li>
+      <li>
+        <a href="#edit-other">
+          <i class="fas fa-cog fa-fw"></i>
+          其他資料
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group has-info">
+              <label class="col-md-2 control-label no-padding-right">標題</label>
+              <div class="col-md-10">
+                <input type="text" name="title" value="{^$data.title|default|escape^}" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">簡述</label>
+              <div class="col-md-10">
+                <textarea name="brief" rows="3" class="form-control">{^$data.brief|default|escape^}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">外部鏈接</label>
+              <div class="col-md-10">
+                <input type="text" name="link_url" value="{^$data.link_url|default|escape^}" class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">
+                    <span class="help-button" title="說明訊息" data-plugins="popover" data-trigger="hover" data-placement="top" data-html="true" data-content="上傳限制：{^$upload_max_filesize|format_byte^}">?</span>
+                    上傳檔案
+                  </label>
+                  <div class="col-md-8">
+                    <button type="button" data-load-init="performed" data-file-upload="file_url" class="btn btn-primary btn-block">
+                      <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                      選擇檔案
+                    </button>
+                    <div class="file-list"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">或輸入檔案地址</label>
+                  <div class="col-md-8">
+                    <input type="text" name="file_url" value="{^$data.file_url|default|escape^}" maxlength="255" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">標籤</label>
+              <div class="col-md-10">
+                <input type="text" name="tags" value="{^$data.tags|default|escape^}" data-plugins="selectize-text" data-options='{"options":{^$tag_options|json_encode^}}' class="form-control">
+              </div>
+            </div>
+            <!-- {^if $category_options^} -->
+            <div class="form-group has-info">
+              <label class="col-md-2 control-label no-padding-right">分類</label>
+              <div class="col-md-10" id="category-options">
+                <select name="cat_id[]" class="form-control" placeholder="請選擇..." data-plugins="selectize-multiple" data-options="{'plugins':['remove_button','drag_drop']}" data-sels="{^$data.category|default^}" multiple>
+                  <option value="">請選擇</option>
+                  <!-- {^foreach from=$category_options item=cat^} -->
+                  <option value="{^$cat.cat_id^}" data-text="{^$cat.tree_name|default^}"{^if $cat.has_children gt 0^} disabled{^/if^}>{^'&nbsp;'|str_repeat:(4*$cat.level)^}{^$cat.cat_name^}</option>
+                  <!-- {^/foreach^} -->
+                </select>
+              </div>
+            </div>
+            <!-- {^/if^} -->
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">
+                <span class="help-button" title="說明訊息" data-plugins="popover" data-trigger="hover" data-placement="top" data-html="true" data-content="最佳尺寸：[ {^$picture_thumb^} ]<br>上傳限制：4 M<br>上傳格式：GIF&nbsp;|&nbsp;JPG&nbsp;|&nbsp;PNG">?</span>
+                圖案
+              </label>
+              <div class="col-md-10">
+                <input type="hidden" name="img_url" value="{^$data.img_url^}">
+                <div class="row">
+                  <div class="col-md-4">
+                    <button type="button" data-load-init="performed" data-file-upload="img_url" data-upload-mime-types='[{"title":"Image files","extensions":"jpg,gif,png,jpeg"}]' data-upload-max-file-size="10mb" data-element-options="{'showUploadButton':true,'doneProgress':true}" class="btn btn-primary btn-block">
+                      <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                      選擇檔案
+                    </button>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="file-list"></div>
+                  </div>
+                </div>
+                <div class="row hidden">
+                  <div class="col-md-12">
+                    <div class="space-2"></div>
+                    <button type="button" data-edit-picture="img_url" data-base-url="{^$smarty.const.BASE_URL^}" data-options="{'aspectRatio':{^(450/300)^}}" class="btn btn-sm btn-primary">
+                      <i class="far fa-image fa-fw"></i>
+                      編輯
+                    </button>
+                    <label class="custom-checkbox checkbox-inline">
+                      <input type="checkbox" name="auto_thumb" value="1" class="custom-control-input" checked>
+                      <span class="custom-control-indicator"></span>
+                      &nbsp;啟用縮圖
+                    </label>
+                  </div>
+                </div>
+                <!-- {^if $data.img_url^} -->
+                <p class="help-block picture-file-help">
+                  你已經上傳過圖案，再次上傳時將覆蓋原圖案！
+                  <a href="{^$smarty.const.BASE_URL^}{^$data.img_url^}" data-plugins="magnific-popup" target="_blank" class="btn btn-outline btn-xs">
+                    <i class="far fa-image fa-fw"></i>
+                    放大
+                  </a>
+                  <a href="#" data-toggle="remove" data-row-id="{^$data.bulletin_id^}" class="btn btn-outline btn-xs btn-danger">
+                    <i class="fas fa-trash-alt fa-fw"></i>
+                    刪除
+                  </a>
+                </p>
+                <!-- {^/if^} -->
+              </div>
+            </div>
+
+            <div class="form-group" data-toggle="date-range" data-date-start="release_start_time" data-date-end="release_end_time" data-date-ctrl="is_time">
+              <label class="col-md-2 control-label no-padding-right">
+                發佈時段
+              </label>
+              <div class="col-md-6">
+                <div class="input-daterange input-group" data-plugins="datepicker">
+                  <input type="text" name="release_start_time" value="{^$data.release_start_time|date_format:'%Y-%m-%d'^}" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fas fa-exchange-alt"></i>
+                  </span>
+                  <input type="text" name="release_end_time" value="{^$data.release_end_time|date_format:'%Y-%m-%d'^}" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="custom-checkbox checkbox-inline">
+                  <input type="checkbox" name="is_time" value="1" class="custom-control-input"{^if $data.is_time eq 1^} checked{^/if^}>
+                  <span class="custom-control-indicator"></span>
+                  &nbsp;啟用結束時間
+                </label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">排序</label>
+                  <div class="col-md-8">
+                    <input type="text" name="sort_order" value="{^$data.sort_order^}" maxlength="5" class="form-control text-center" data-plugins="touchspin" data-options="{'min':'0','max':'32767'}">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">重要性</label>
+                  <div class="col-md-8">
+                    <label class="custom-radio radio-inline">
+                      <input type="radio" name="show_type" value="0" class="custom-control-input"{^if $data.show_type eq '0'^} checked{^/if^}>
+                      <span class="custom-control-indicator"></span>
+                      &nbsp;普通
+                    </label>
+                    <label class="custom-radio radio-inline">
+                      <input type="radio" name="show_type" value="1" class="custom-control-input"{^if $data.show_type eq '1'^} checked{^/if^}>
+                      <span class="custom-control-indicator"></span>
+                      &nbsp;置頂
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">是否顯示</label>
+                  <div class="col-md-8">
+                    <label class="switcher switcher-rounded switcher-blank">
+                      <input type="checkbox" name="is_open" value="1"{^if $data.is_open eq 1^} checked{^/if^}>
+                      <div class="switcher-indicator">
+                        <div class="switcher-yes">
+                          <i class="fas fa-check"></i>
+                        </div>
+                        <div class="switcher-no">
+                          <i class="fas fa-times"></i>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 hidden">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">加入</label>
+                  <div class="col-md-8">
+                    <label class="custom-checkbox checkbox-inline">
+                      <input type="checkbox" name="is_best" value="1" class="custom-control-input"{^if $data.is_best^} checked{^/if^}>
+                      <span class="custom-control-indicator"></span>
+                      &nbsp;推薦
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row{^if count($languages) eq 1^} hidden{^/if^}">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="col-md-2 control-label no-padding-right">語系顯示</label>
+                  <div class="col-md-10">
+                    <!-- {^foreach from=$languages item=item key=key^} -->
+                    <label class="custom-checkbox checkbox-inline">
+                      <input type="checkbox" name="is_open]" value="1" class="custom-control-input"{^if $data.is_open|default:1 eq 1^} checked{^/if^}>
+                      <span class="custom-control-indicator"></span>
+                      &nbsp;{^$item.name|escape^}
+                    </label>
+                    <!-- {^/foreach^} -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="edit-content" class="tab-pane">
+        <div class="space-6"></div>
+        <div class="form-group">
+          <div class="col-md-12">
+            <textarea name="content" rows="10" class="form-control loadCKEditor" data-load-init="build.DU" data-plugins="ckeditor">{^$data.content|default|escape:'html'^}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="edit-related">
+        <div class="space-10"></div>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="form-search">
+              <!-- {^if $category_options^} -->
+              <div class="inline">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="ace-icon fa fa-sitemap"></i>
+                  </span>
+                  <select name="rel_bulletin_cat_id" class="form-control">
+                    <option value="0">所有分類</option>
+                    <!-- {^foreach from=$category_options item=cat^} -->
+                    <option value="{^$cat.cat_id^}">{^'&nbsp;'|str_repeat:(4*$cat.level)^}{^$cat.cat_name|escape^}</option>
+                    <!-- {^/foreach^} -->
+                  </select>
+                </div>
+              </div>
+              <div class="inline">&nbsp;</div>
+              <!-- {^/if^} -->
+              <div class="inline input-xlarge">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="ace-icon fa fa-search"></i>
+                  </span>
+                  <input type="text" name="rel_title" placeholder="關鍵字" class="form-control">
+                  <span class="input-group-btn">
+                    <button type="button" id="search-rel-bulletin" class="btn btn-info">
+                      搜尋
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="space-6"></div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="panel panel-transparent">
+                  <div class="panel-heading no-padding-left no-padding-right">
+                    <span class="panel-title">可選項目</span>
+                  </div>
+                  <div class="panel-body no-padding-left no-padding-right">
+                    <select name="rel_bulletin_src_sel" class="form-control px-height-300" size="20" multiple>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 text-center">
+                <div class="space-30 hidden-xs hidden-sm"></div>
+                <div class="space-20 hidden-xs hidden-sm"></div>
+                <div class="btn-group-vertical">
+                  <label class="custom-control custom-radio inline">
+                    <input type="radio" name="is_single" value="1" class="custom-control-input" checked>
+                    <span class="custom-control-indicator"></span>
+                    &nbsp;單向&nbsp;
+                  </label>
+                  <label class="custom-control custom-radio inline">
+                    <input type="radio" name="is_single" value="0" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    &nbsp;雙向&nbsp;
+                  </label>
+                </div>
+                <div class="space-10 clearfix hidden-xs hidden-sm"></div>
+                <div class="btn-group-vertical btn-group hidden-xs hidden-sm">
+                  <button type="button" class="add-col-rel-bulletin btn btn-primary">全部加入</button>
+                  <button type="button" class="add-one-rel-bulletin btn btn-primary">加入</button>
+                  <button type="button" class="drop-one-rel-bulletin btn btn-primary">移除</button>
+                  <button type="button" class="drop-col-rel-bulletin btn btn-primary">全部移除</button>
+                </div>
+                <div class="space-4 clearfix visible-xs visible-sm"></div>
+                <div class="visible-xs-block visible-sm-block">
+                  <button type="button" class="add-col-rel-bulletin btn btn-primary px-width-80">全部加入</button>
+                  <button type="button" class="add-one-rel-bulletin btn btn-primary px-width-80">加入</button>
+                  <div class="visible-xs space-2 clearfix"></div>
+                  <button type="button" class="drop-one-rel-bulletin btn btn-primary px-width-80">移除</button>
+                  <button type="button" class="drop-col-rel-bulletin btn btn-primary px-width-80">全部移除</button>
+                </div>
+                <div class="space-20 clearfix visible-xs visible-sm"></div>
+              </div>
+              <div class="clearfix visible-xs visible-sm"></div>
+
+              <div class="col-md-5">
+                <div class="panel panel-transparent">
+                  <div class="panel-heading no-padding-left no-padding-right">
+                    <span class="panel-title">已選項目</span>
+                  </div>
+                  <div class="panel-body no-padding-left no-padding-right">
+                    <select name="rel_bulletin_tgt_sel" class="form-control px-height-300" size="20" multiple>
+                      <!-- {^foreach from=$bulletin_link_list item=rel_bulletin^} -->
+                      <option value="{^$rel_bulletin.bulletin_id^}">{^$rel_bulletin.title|escape^}</option>
+                      <!-- {^/foreach^} -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="edit-other" class="tab-pane">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁標題</label>
+              <div class="col-md-10">
+                <input type="text" name="page_title" value="{^$data.page_title|default|escape^}" class="form-control">
+                <p class="help-block text-muted small">
+                  網頁的標題將顯示在瀏覽器的標題欄
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁關鍵詞</label>
+              <div class="col-md-10">
+                <input type="text" name="meta_keywords" value="{^$data.meta_keywords|default|escape^}" data-plugins="selectize-text" class="form-control">
+                <p class="help-block text-muted small">
+                  用於定義網頁關鍵詞，提供搜尋引擎分類網頁使用的<br>
+                  最大長度建議不要大於 60 個字(最多不超過 5 個關鍵字)
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁簡短描述</label>
+              <div class="col-md-10">
+                <textarea name="meta_description" rows="3" class="form-control">{^$data.meta_description|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  用於定義網頁簡短描述，提供搜尋引擎描述網頁使用的<br>
+                  最大長度建議不要大於 160 個字
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">統計代碼</label>
+              <div class="col-md-10">
+                <textarea name="stats_code_head" rows="6" class="form-control">{^$data.stats_code_head|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  您可以將其他訪問統計服務商提供的代碼新增到每一個頁面(&lt;/head&gt;之前)
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">統計代碼</label>
+              <div class="col-md-10">
+                <textarea name="stats_code_body" rows="6" class="form-control">{^$data.stats_code_body|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  您可以將其他訪問統計服務商提供的代碼新增到每一個頁面(&lt;/body&gt;之前)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

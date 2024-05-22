@@ -1,0 +1,55 @@
+<!-- {^if isset($pager) and $pager.page_count gt 1^} 頁數大於 1 頁以上才顯示 -->
+<nav class="pagination-frame row justify-content-center justify-content-md-between">
+  <div class="col-12 col-md">
+    <ul class="pagination justify-content-center justify-content-md-start">
+      <!-- {^if $pager.page_first^} -->
+      <li class="page-item d-none d-sm-flex"><a class="page-link page-prev" href="{^$pager.page_first^}"><i class="fas fa-angle-double-left"></i></a></li>
+      <!-- {^else^} -->
+      <li class="page-item d-none d-sm-flex disabled"><a class="page-link page-prev" href="#"><i class="fas fa-angle-double-left"></i></a></li>
+      <!-- {^/if^} -->
+
+      <!-- {^if $pager.page_prev^} -->
+      <li class="page-item"><a class="page-link page-prev" href="{^$pager.page_prev^}"><i class="fas fa-angle-left"></i></a></li>
+      <!-- {^else^} -->
+      <li class="page-item disabled"><a class="page-link page-prev" href="#"><i class="fas fa-angle-left"></i></a></li>
+      <!-- {^/if^} -->
+      <!-- {^foreach from=$pager.navigation item=pager_list key=key name=navigation^} 分頁 -->
+      <!-- {^if $pager.page eq $key^} 判斷目前是否同一頁 -->
+      <li class="page-item active" aria-current="page">
+        <span class="page-link">
+          {^$key^}
+          <span class="sr-only">(current)</span>
+        </span>
+      </li>
+      <!-- {^else^} -->
+      <li class="page-item"><a class="page-link" href="{^$pager_list^}">{^$key^}</a></li>
+      <!-- {^/if^} -->
+      <!-- {^/foreach^} -->
+      <!-- {^if $pager.page_next^} -->
+      <li class="page-item"><a class="page-link page-next" href="{^$pager.page_next^}"><i class="fas fa-angle-right"></i></a></li>
+      <!-- {^else^} -->
+      <li class="page-item disabled"><a class="page-link page-next" href="#"><i class="fas fa-angle-right"></i></a></li>
+      <!-- {^/if^} -->
+      <!-- {^if $pager.page_last^} -->
+      <li class="page-item d-none d-sm-flex"><a class="page-link page-next" href="{^$pager.page_last^}"><i class="fas fa-angle-double-right"></i></a></li>
+      <!-- {^else^} -->
+      <li class="page-item d-none d-sm-flex disabled"><a class="page-link page-next" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+      <!-- {^/if^} -->
+    </ul>
+  </div>
+  <div class="col-auto col-md-auto">
+    <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="get">
+    <div class="d-flex align-items-center">
+      <!-- {^foreach from=$pager.search|default:[] item=val key=key^} -->
+      {^if $key neq 'page'^}
+      <input type="hidden" name="{^$key^}" value="{^$val^}">
+      {^/if^}
+      <!-- {^/foreach^} -->
+      <div>共 {^$pager.page_count^} 頁目前第&nbsp;</div>
+      <div><input type="text" name="page" id="goto-page" class="form-control" maxlength="3" value="{^$pager.page^}"></div>
+      <div>&nbsp;頁</div>
+    </div>
+    </form>
+  </div>
+</nav>
+<!-- {^/if^} -->

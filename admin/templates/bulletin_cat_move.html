@@ -1,0 +1,74 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="BulletinCatMove"^} -->
+<div class="well">
+  <h4 class="blue smaller lighter">什麼是分類轉移？</h4>
+  如果需要對分類進行變更，那麼你可以通過此功能，正確管理你的分類
+  <br>
+  <span class="red2">請注意，移轉功能僅使用於最底層分類，並且移轉對象必須為相同階層</span>
+  <!-- {^if $smarty.const.CL_BULLETIN neq 1^} -->
+  <br>
+  <span class="red2">如移轉目的為更改上層分類，請使用編輯方式，修改上層分類</span>
+  <!-- {^/if^} -->
+</div>
+<div class="panel">
+  <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="the-form" class="form-horizontal">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <div class="panel-body tabbable">
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-md-5">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-sitemap fa-fw"></i>
+                來源分類
+              </span>
+              <select name="cat_id" class="custom-select form-control">
+                <option value="0">請選擇...</option>
+                {^$cat_select^}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                <div class="space-2 visible-xs visible-sm"></div>
+                <div class="input-group">
+                  <p class="form-control-static hidden-xs hidden-sm">&nbsp;</p>
+                  <span class="input-group-addon">
+                    <span class="hidden-xs hidden-sm">&nbsp;&nbsp;</span>
+                    <i class="fas fa-angle-double-right hidden-xs hidden-sm"></i>
+                    <i class="fas fa-angle-double-down visible-xs visible-sm"></i>
+                    <span class="hidden-xs hidden-sm">&nbsp;&nbsp;</span>
+                  </span>
+                  <p class="form-control-static hidden-xs hidden-sm">&nbsp;</p>
+                </div>
+                <div class="space-2 visible-xs visible-sm"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-sitemap fa-fw"></i>
+                目標分類
+              </span>
+              <select name="target_cat_id" class="custom-select form-control">
+                <option value="0">請選擇...</option>
+                {^$cat_select^}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

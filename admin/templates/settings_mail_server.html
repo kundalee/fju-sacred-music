@@ -1,0 +1,89 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="SettingsMailServer"^} -->
+<div class="alert alert-warning">
+  如果您的伺服器支援 Mail 函數(具體資訊請諮詢您的空間提供商)，我們建議您使用系統的 Mail 函數。<br>當您的伺服器不支援 Mail 函數的時候您也可以選用 SMTP 作為郵件伺服器。
+</div>
+<div class="panel">
+  <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="the-form" class="form-horizontal">
+  <input type="hidden" name="action" value="post">
+  <input name="type" type="hidden" value="mail_server">
+  <div class="panel-body tabbable">
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="row">
+          <div class="col-lg-11">
+            <!-- {^foreach from=$cfg item=var key=key^} -->
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <!-- {^sys^} -->
+                <label class="custom-checkbox">
+                  <input type="checkbox" name="is_display[{^$var.code^}]" value="1" class="custom-control-input"{^if $var.is_display^} checked{^/if^}>
+                  <span class="custom-control-indicator"></span>
+                  &nbsp;
+                </label>
+                <!-- {^syselse^} -->
+                <input type="hidden" name="is_display[{^$var.code^}]" value="{^$var.is_display^}">
+                <!-- {^/sys^} -->
+                {^$var.name^}
+              </label>
+              <div class="col-md-10">
+                <!-- {^if $var.type eq "text"^} -->
+                <input type="text" name="value[{^$var.code^}]" value="{^$var.value|escape^}" class="form-control">
+                <!-- {^elseif $var.type eq "password"^} -->
+                <input type="password" name="value[{^$var.code^}]" value="{^$var.value^}" class="form-control">
+                <!-- {^elseif $var.type eq "textarea"^} -->
+                <textarea name="value[{^$var.code^}]" rows="{^$var.field_size.rows|default:5^}" class="form-control">{^$var.value|escape^}</textarea>
+                <!-- {^elseif $var.type eq "select"^} -->
+                <!-- {^foreach from=$var.store_options key=key item=opt^} -->
+                <label class="custom-radio radio-inline">
+                  <!-- {^if $var.value eq $opt.value^} -->
+                  <input type="radio" name="value[{^$var.code^}]" value="{^$opt.value^}" class="custom-control-input" checked>
+                  <!-- {^else^} -->
+                  <input type="radio" name="value[{^$var.code^}]" value="{^$opt.value^}" class="custom-control-input">
+                  <!-- {^/if^} -->
+                  <span class="custom-control-indicator"></span>
+                  &nbsp;{^$opt.name^}
+                </label>
+                <!-- {^/foreach^} -->
+                <!-- {^elseif $var.type eq "options"^} -->
+                <select name="value[{^$var.code^}]" class="form-control">
+                  <!-- {^foreach from=$var.store_options key=key item=opt^} -->
+                  <option value="{^$opt.value^}"{^if $var.value eq $opt.value^} selected{^/if^}>{^$opt.name^}</option>
+                  <!-- {^/foreach^} -->
+                </select>
+                <!-- {^/if^} -->
+                <!-- {^if $var.desc^} -->
+                <small class="clearfix text-muted">{^$var.desc|nl2br^}</small>
+                <!-- {^/if^} -->
+              </div>
+            </div>
+            <!-- {^/foreach^} -->
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">
+                郵件地址
+              </label>
+              <div class="col-md-10">
+                <div class="input-group">
+                  <input type="text" name="test_mail_address" maxlength="255" class="form-control">
+                  <span class="input-group-btn">
+                    <button type="button" name="sendTestEmail" class="btn btn-inverse">
+                      <i class="far fa-envelope-open fa-fw align-top bigger-140"></i>
+                      <span class="hidden-480">發送測試郵件</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

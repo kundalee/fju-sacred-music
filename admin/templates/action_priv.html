@@ -1,0 +1,62 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="ActionPriv"^} -->
+<div class="panel table-light">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center px-width-200">檔案</th>
+          <th class="text-center px-width-200">操作代碼</th>
+          <th class="text-center">操作名稱</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- {^foreach from=$priv_arr key=file item=priv^} -->
+        <!-- {^foreach from=$priv item=code name=code^} -->
+        <tr{^if isset($db_priv[$code])^} data-item-id="{^$db_priv[$code].action_id^}"{^/if^}{^if not isset($db_priv[$code])^} class="warning"{^/if^}>
+          <!-- {^if $smarty.foreach.code.first^} -->
+          <td rowspan="{^$smarty.foreach.code.total^}">{^$file^}</td>
+          <!-- {^/if^} -->
+          <td>
+            <!-- {^if not isset($db_priv[$code])^} -->
+            {^$code^}
+            <!-- {^else^} -->
+            {^$code^}
+            <!-- {^/if^} -->
+          </td>
+          <td>
+            <!-- {^if isset($db_priv[$code])^} -->
+            <span data-cell-edit="action_name">{^$db_priv[$code].action_name^}</span>
+            <!-- {^/if^} -->
+          </td>
+        </tr>
+        <!-- {^/foreach^} -->
+        <!-- {^/foreach^} -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- {^if $no_create_priv.db^} -->
+<div class="panel table-light">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center px-width-200">檔案</th>
+          <th class="text-center px-width-200">操作代碼</th>
+          <th class="text-center">操作名稱</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- {^foreach from=$no_create_priv.db item=code^} -->
+        <tr data-item-id="{^$db_priv[$code].action_id^}">
+          <td></td>
+          <td><span data-cell-edit="action_code">{^$code^}</span></td>
+          <td><span data-cell-edit="action_name">{^$db_priv[$code].action_name^}</span></td>
+        </tr>
+        <!-- {^/foreach^} -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- {^/if^} -->

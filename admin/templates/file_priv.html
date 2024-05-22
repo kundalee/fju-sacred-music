@@ -1,0 +1,70 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="FilePriv"^} -->
+<!-- {^if $tpl_msg^} -->
+<div class="alert alert-danger">
+  <strong>
+    <i class="fas fa-times fa-fw"></i>
+    目錄 {^$tpl_msg^} 需要執行 rename 權限
+  </strong>
+</div>
+<!-- {^/if^} -->
+<div class="panel table-light">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center">項目</th>
+          <th class="text-center">可讀權限</th>
+          <th class="text-center">可寫權限</th>
+          <th class="text-center">可修改權限</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- {^foreach from=$list item=item key=key^} -->
+        <tr>
+          <td>{^$item.item^}</td>
+          <td>
+            <!-- {^if $item.r > 0^} -->
+            <div class="text-center"><i class="fas fa-check blue"></i></div>
+            <!-- {^else^} -->
+            <div class="text-center"><i class="fas fa-times red"></i></div>
+            <!-- {^if $item.err_msg.w^} -->
+            <hr class="hr-4">
+            <!-- {^foreach from=$item.err_msg.r item=msg^} -->
+            <div>{^$msg^}</div>
+            <!-- {^/foreach^} -->
+            <!-- {^/if^} -->
+            <!-- {^/if^} -->
+          </td>
+          <td>
+            <!-- {^if $item.w > 0^} -->
+            <div class="text-center"><i class="fas fa-check blue"></i></div>
+            <!-- {^else^} -->
+            <div class="text-center"><i class="fas fa-times red"></i></div>
+            <!-- {^if $item.err_msg.w^} -->
+            <hr class="hr-4">
+            <!-- {^foreach from=$item.err_msg.w item=msg^} -->
+            <div>{^$msg^}</div>
+            <!-- {^/foreach^} -->
+            <!-- {^/if^} -->
+            <!-- {^/if^} -->
+          </td>
+          <td>
+            <!-- {^if $item.m > 0^} -->
+            <div class="text-center"><i class="fas fa-check blue"></i></div>
+            <!-- {^else^} -->
+            <div class="text-center"><i class="fas fa-times red"></i></div>
+            <!-- {^if $item.err_msg.m^} -->
+            <hr class="hr-4">
+            <!-- {^foreach from=$item.err_msg.m item=msg^} -->
+            <div>{^$msg^}</div>
+            <!-- {^/foreach^} -->
+            <!-- {^/if^} -->
+            <!-- {^/if^} -->
+          </td>
+        </tr>
+        <!-- {^/foreach^} -->
+      </tbody>
+    </table>
+  </div>
+</div>

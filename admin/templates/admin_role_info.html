@@ -1,0 +1,84 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="AdminRoleForm"^} -->
+<div class="panel">
+  <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="the-form" class="form-horizontal">
+  <input type="hidden" name="role_id" value="{^$data.role_id^}">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <!-- {^if $data.action_list eq 'all'^} -->
+  <input type="hidden" name="action_code[]" value="{^$data.action_list^}">
+  <!-- {^/if^} -->
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs">
+      <li>
+        <a href="#edit-general">
+          <i class="fas fa-edit fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+      <!-- {^if $priv_arr and $data.action_list neq 'all'^} -->
+      <li>
+        <a href="#edit-purview">
+          <i class="fas fa-cog fa-fw"></i>
+          權限控管
+        </a>
+      </li>
+      <!-- {^/if^} -->
+    </ul>
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group has-info">
+              <label class="col-md-2 control-label no-padding-right">名稱</label>
+              <div class="col-md-10">
+                <input type="text" name="role_name" value="{^$data.role_name|default|escape^}" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">描述</label>
+              <div class="col-md-10">
+                <textarea name="role_describe" rows="3" class="form-control">{^$data.role_describe|default|escape^}</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- {^if $priv_arr and $data.action_list neq 'all'^} -->
+      <div id="edit-purview" class="tab-pane">
+        <!-- {^foreach from=$priv_arr key=key item=priv^} -->
+        <div class="panel panel-warning panel-dark">
+          <div class="panel-heading no-padding-left no-padding-right">
+            <label class="custom-checkbox checkbox-inline no-padding-top">
+              <input type="checkbox" name="chkGroup" value="{^$priv.priv_list^}" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+              &nbsp;{^$priv.action_name^}
+            </label>
+            <div class="panel-heading-icon">
+              <i class="fas fa-sliders-h"></i>
+            </div>
+          </div>
+          <div class="panel-body no-padding-left no-padding-right">
+            <!-- {^foreach from=$priv.priv key=priv_list item=list^} -->
+            <label class="custom-checkbox checkbox-inline">
+              <input type="checkbox" name="action_code[]" value="{^$priv_list^}" data-relevance="{^$list.relevance^}" class="custom-control-input"{^if $list.cando^} checked{^/if^}>
+              <span class="custom-control-indicator"></span>
+              &nbsp;{^$list.action_name^}
+            </label>
+            <!-- {^/foreach^} -->
+          </div>
+        </div>
+        <!-- {^/foreach^} -->
+      </div>
+      <!-- {^/if^} -->
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

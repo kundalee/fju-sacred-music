@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!-- Meta -->
+{^assign
+  var="nav_breadcrumb"
+  value=[['text'=>($data.page_title|default:'歌本專區'|escape)]]
+^}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="{^$keywords|default^}">
+<meta name="description" content="{^$description|default|strip:''^}">
+<meta name="twitter:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta name="twitter:keywords" content="{^$keywords|default^}">
+<meta name="twitter:description" content="{^$description|default|strip:''^}">
+<meta name="twitter:site" content="{^link^}">
+<meta property="og:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta property="og:keywords" content="{^$keywords|default^}">
+<meta property="og:description" content="{^$description|default|strip:''^}">
+<meta property="og:url" content="{^link^}">
+<title>{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}</title>
+<base href="{^insert name='base_url' nocache=true^}" data-theme="{^$theme_dir|default^}" data-lang="{^$lang_code|default^}">
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon">
+<link href="favicon.ico" rel="shortcut icon">
+<link href="favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
+<link href="favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
+<link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+<link href="site.webmanifest" rel="manifest">
+<!-- Web Fonts -->
+<!-- CSS RWD Core -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- CSS Plugins -->
+<link href="assets/css/plugins.min.css" rel="stylesheet">
+<!-- CSS Customization -->
+<link href="assets/css/custom.min.css" rel="stylesheet">
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_head|default^}
+{^$data.stats_code_head|default^}
+<!-- {^/if^} -->
+</head>
+<body>
+<main>
+  <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+  <div class="body-container">
+    <div class="page-banner-frame" data-parallax="scroll" data-image-src="assets/images/page-banner-02.jpg">
+      <div class="mask"></div>
+      <h1>歌本專區</h1>
+    </div>
+    <section class="welcome-wrapper">
+      <table class="table list-table-themes">
+        <thead>
+          <tr>
+            <th>書本名稱</th>
+            <th class="w-px-200">編者</th>
+            <th class="w-px-400">標籤</th>
+          </tr>
+        </thead>
+        <!-- {^foreach from=$item_arr item=item name=list^} -->
+        <tbody>
+          <tr>
+
+            <td class="child-title" data-title="書本名稱："><a href="{^$item.url^}">{^$item.book_title|escape^}</a></td>
+            <td class="child-title" data-title="編者：">{^$item.author|escape^}</td>
+            <td class="child-title" data-title="標籤：">
+              <div>
+                <!-- {^if $item.relation_tags^} -->
+                <ul class="td-tags">
+                  <!-- {^foreach from=$item.relation_tags item=item^} -->
+                  <li><a title="{^$item.tag_name|escape^}" href="{^$item.url^}">{^$item.tag_name|escape^}</a></li>
+                  <!-- {^/foreach^} -->
+                </ul>
+                <!-- {^/if^} -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <!-- {^/foreach^} -->
+      </table>
+      <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+    </section>
+  </div>
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</main>
+<script async src="assets/js/plugins/require.min.js" data-main="assets/js/require-config.js"></script>
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_body|default^}
+{^$data.stats_code_body|default^}
+<!-- {^/if^} -->
+</body>
+</html>

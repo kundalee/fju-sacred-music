@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Meta -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>{^$shop_name^}</title>
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon">
+<link href="favicon.ico" rel="shortcut icon">
+<link href="apple-touch-icon.png" rel="apple-touch-icon">
+<!-- Web Fonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Noto+Sans|Noto+Sans+TC:100,300,400,500,700,900|Noto+Sans+SC:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+<!-- CSS RWD Core -->
+{^assign var="layout_theme" value=$ui_layout_cfg['theme']|default:'default'^}
+<!-- {^foreach from=['bs'=>'bootstrap','core'=>'pixeladmin','widgets'=>'widgets'] key=key item=val^} -->
+<link href="assets/css/{^$val^}{^if preg_match('/dark/i',$layout_theme)^}-dark{^/if^}{^if $ui_layout_cfg['rtl']|default^}.rtl{^/if^}.min.css" rel="stylesheet" class="px-stylesheet-{^$key^}">
+<!-- {^/foreach^} -->
+<!-- CSS Themes -->
+<link href="assets/css/themes/{^$layout_theme^}.min.css" rel="stylesheet" class="px-stylesheet-theme">
+<!-- CSS Customization -->
+<link href="assets/css/custom.css" rel="stylesheet">
+<script src="assets/js/plugins/pace.min.js"></script>
+</head>
+<body{^if $ui_layout_cfg['fixed_navbar']|default^} class="px-navbar-fixed"{^/if^} data-state-router-url='["{^("\",\"")|implode:$state_router_url^}"]'>
+<!-- Nav -->
+<du-nav template-url="'./?action=menu'" class="{^if $ui_layout_cfg['right_nav']|default^}px-nav-right{^else^}px-nav-left{^/if^}{^if $ui_layout_cfg['fixed_nav']|default^} px-nav-fixed{^/if^}{^if $ui_layout_cfg['off_canvas_nav']|default^} px-nav-off-canvas{^/if^}"></du-nav>
+<!-- Navbar -->
+<du-navbar template-url="'./?action=navbar'"></du-navbar>
+<!-- Main view  -->
+<div ui-view class="px-content"></div>
+<!-- Footer -->
+<du-footer template-url="'./?action=footer'" class="px-footer-bottom"></du-footer>
+<div id="px-sidebar" class="px-sidebar-right bg-primary" ng-controller="UISettingsCtrl as vm">
+  <a href="#" id="px-sidebar-toggle" class="bg-primary b-y-1 b-l-1 text-default" data-toggle="sidebar" data-target="#px-sidebar"><i class="fas fa-cog"></i><i class="fas fa-times"></i></a>
+  <div id="px-sidebar-loader" class="form-loading form-loading-inverted"></div>
+  <div class="px-sidebar-content">
+    <div id="px-togglers">
+      <h6 class="px-sidebar-header b-y-1 bg-primary darker">SETTINGS</h6>
+      <div class="box m-a-0 border-radius-0 bg-transparent">
+        <div class="box-row">
+          <div class="box-cell p-l-3 bg-primary">
+            <label for="px-fixed-navbar-toggler">固定主導航列</label>
+          </div>
+          <div class="box-cell p-r-3 bg-primary">
+            <label class="switcher switcher-blank switcher-sm">
+              <input type="checkbox" id="px-fixed-navbar-toggler" class="fixed-navbar-toggler"{^if $ui_layout_cfg['fixed_navbar']|default^} checked{^/if^}>
+              <div class="switcher-indicator">
+                <div class="switcher-yes bg-primary darker">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="switcher-no">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="box-row">
+          <div class="box-cell bg-primary p-l-3">
+            <label for="px-fixed-nav-toggler">固定次導航列</label>
+          </div>
+          <div class="box-cell bg-primary p-r-3">
+            <label class="switcher switcher-blank switcher-sm">
+              <input type="checkbox" id="px-fixed-nav-toggler" class="fixed-nav-toggler"{^if $ui_layout_cfg['fixed_nav']|default^} checked{^/if^}>
+              <div class="switcher-indicator">
+                <div class="switcher-yes bg-primary darker">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="switcher-no">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="box-row">
+          <div class="box-cell bg-primary p-l-3">
+            <label for="px-nav-right-toggler">右邊次導航列</label>
+          </div>
+          <div class="box-cell bg-primary p-r-3">
+            <label class="switcher switcher-blank switcher-sm">
+              <input type="checkbox" id="px-nav-right-toggler" class="nav-right-toggler"{^if $ui_layout_cfg['right_nav']|default^} checked{^/if^}>
+              <div class="switcher-indicator">
+                <div class="switcher-yes bg-primary darker">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="switcher-no">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="box-row">
+          <div class="box-cell bg-primary p-l-3">
+            <label for="px-nav-off-canvas-toggler">關閉導航列圖示</label>
+          </div>
+          <div class="box-cell bg-primary p-r-3">
+            <label class="switcher switcher-blank switcher-sm">
+              <input type="checkbox" id="px-nav-off-canvas-toggler" class="nav-off-canvas-toggler"{^if $ui_layout_cfg['off_canvas_nav']|default^} checked{^/if^}>
+              <div class="switcher-indicator">
+                <div class="switcher-yes bg-primary darker">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="switcher-no">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h6 class="px-sidebar-header bg-primary darker b-y-1">THEMES</h6>
+    <div class="px-themes-list clearfix bg-primary">
+      <!-- {^foreach from=['default'=>'Default','asphalt'=>'Asphalt','purple-hills'=>'Purple Hills','adminflare'=>'Adminflare','dust'=>'Dust','frost'=>'Frost','fresh'=>'Fresh','silver'=>'Silver','clean'=>'Clean','white'=>'White','candy-black'=>'Candy Black','candy-blue'=>'Candy Blue','candy-red'=>'Candy Red','candy-orange'=>'Candy Orange','candy-green'=>'Candy Green','candy-purple'=>'Candy Purple','candy-cyan'=>'Candy Cyan','mint-dark'=>'Mint Dark','dark-blue'=>'Dark Blue','dark-red'=>'Dark Red','dark-orange'=>'Dark Orange','dark-green'=>'Dark Green','dark-purple'=>'Dark Purple','dark-cyan'=>'Dark Cyan','darklight-blue'=>'Darklight Blue','darklight-red'=>'Darklight Red','darklight-orange'=>'Darklight Orange','darklight-green'=>'Darklight Green','darklight-purple'=>'Darklight Purple','darklight-cyan'=>'Darklight Cyan'] key=value item=$label^} -->
+      <label class="px-themes-item">
+        <input type="radio" class="px-themes-toggler" name="px-current-theme" value="{^$value^}"><img src="assets/images/themes/{^$value^}.png" class="px-themes-thumbnail">
+        <div class="px-themes-title font-weight-semibold">
+          <span class="text-white">{^$label^}</span>
+          <div class="bg-primary"></div>
+        </div>
+      </label>
+      <!-- {^/foreach^} -->
+    </div>
+  </div>
+</div>
+<script async src="assets/js/plugins/require.js" data-main="assets/js/require-config.js"></script>
+</body>
+</html>

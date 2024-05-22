@@ -1,0 +1,143 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="BulletinCatForm"^} -->
+<div class="panel">
+  <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="the-form" class="form-horizontal">
+  <input type="hidden" name="cat_id" value="{^$data.cat_id^}">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <input type="hidden" name="old_cat_name" value="{^$data.cat_name|default|escape^}">
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs">
+      <li>
+        <a href="#edit-general">
+          <i class="fas fa-edit fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+      <li>
+        <a href="#edit-other">
+          <i class="fas fa-cog fa-fw"></i>
+          其他資料
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group has-info">
+              <label class="col-md-2 control-label no-padding-right">名稱</label>
+              <div class="col-md-10">
+                <input type="text" name="cat_name" value="{^$data.cat_name|default|escape^}" class="form-control">
+              </div>
+            </div>
+            <!-- {^if $cat_select^} -->
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">上層分類</label>
+              <div class="col-md-10">
+                <select name="parent_id" class="custom-select form-control"{^if $data.is_readonly^} disabled{^/if^}>
+                  <option value="0">最上層分類</option>
+                  {^$cat_select^}
+                </select>
+              </div>
+            </div>
+            <!-- {^/if^} -->
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label no-padding-right">排序</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="sort_order" value="{^$data.sort_order^}" maxlength="5" class="form-control text-center" data-plugins="touchspin" data-options="{'min':'0','max':'32767'}">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label no-padding-right">是否顯示</label>
+                  <div class="col-sm-8">
+                    <label class="switcher switcher-rounded switcher-blank">
+                      <input type="checkbox" name="is_show" value="1" {^if $data.is_show eq 1^} checked{^/if^}>
+                      <div class="switcher-indicator">
+                        <div class="switcher-yes">
+                          <i class="fas fa-check"></i>
+                        </div>
+                        <div class="switcher-no">
+                          <i class="fas fa-times"></i>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="edit-other" class="tab-pane">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁標題</label>
+              <div class="col-md-10">
+                <input type="text" name="page_title" value="{^$data.page_title|default|escape^}" class="form-control">
+                <p class="help-block text-muted small">
+                  網頁的標題將顯示在瀏覽器的標題欄
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁關鍵詞</label>
+              <div class="col-md-10">
+                <input type="text" name="meta_keywords" value="{^$data.meta_keywords|default|escape^}" class="form-control" data-plugins="selectize-text">
+                <p class="help-block text-muted small">
+                  用於定義網頁關鍵詞，提供搜尋引擎分類網頁使用的<br>
+                  最大長度建議不要大於 60 個字(最多不超過 5 個關鍵字)<br>
+                  使用半形逗號分隔每個關鍵字
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁簡短描述</label>
+              <div class="col-md-10">
+                <textarea name="meta_description" rows="3" class="form-control">{^$data.meta_description|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  用於定義網頁簡短描述，提供搜尋引擎描述網頁使用的<br>
+                  最大長度建議不要大於 160 個字
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">統計代碼</label>
+              <div class="col-md-10">
+                <textarea name="stats_code_head" rows="6" class="form-control">{^$data.stats_code_head|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  您可以將其他訪問統計服務商提供的代碼新增到每一個頁面(&lt;/head&gt;之前)
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">統計代碼</label>
+              <div class="col-md-10">
+                <textarea name="stats_code_body" rows="6" class="form-control">{^$data.stats_code_body|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  您可以將其他訪問統計服務商提供的代碼新增到每一個頁面(&lt;/body&gt;之前)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

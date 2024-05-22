@@ -1,0 +1,167 @@
+<!-- {^if $step eq 3^} -->
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="FileCheck"^} -->
+<!-- {^/if^} -->
+<!-- {^if $step eq 1^} -->
+<div class="error-container">
+  <div class="well">
+    <h1 class="grey lighter smaller">
+      <span class="blue bigger-125">
+        <i class="fas fa-search fa-fw"></i>
+      </span>
+      檔案校驗
+    </h1>
+    <hr>
+    <h3 class="lighter smaller">點擊下面按鈕開始進行校驗</h3>
+    <div>
+      <form name="the-form" method="post" class="form-search">
+      <input type="hidden" name="step" value="2">
+      <button class="btn btn-sm" type="submit">確定</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- {^/if^} -->
+<!-- {^if $step eq 2^} -->
+<div class="error-container">
+  <div class="well">
+    <h1 class="grey lighter smaller">
+      <span class="blue bigger-125">
+        <i class="fas fa-search fa-fw"></i>
+      </span>
+      開始校驗
+    </h1>
+    <hr>
+    <h3 class="lighter smaller">
+      正在進行文件校驗
+      <i class="fas fa-wrench fa-fw icon-animated-wrench bigger-125"></i>
+      請稍候......
+    </h3>
+    <div class="space"></div>
+    <div class="center">
+      <a id="go-step-link-3" href="file_check.php?step=3" class="btn btn-primary">
+        <i class="fas fa-tachometer-alt"></i>
+        如果您的瀏覽器沒有自動跳轉，請點擊這裡
+      </a>
+    </div>
+  </div>
+</div>
+<!-- {^/if^} -->
+<!-- {^if $step eq 3^} -->
+<div class="well">
+  <h4 class="blue">技巧提示:</h4>
+  <ul class="list-unstyled spaced inline bigger-110 margin-15 no-margin-bottom">
+    <li>
+      <span class="badge badge-warning">
+        <i class="fas fa-exclamation-triangle fa-fw smaller-80"></i>
+        被修改
+      </span>
+      、
+      <span class="badge badge-danger">
+        <i class="fas fa-trash-alt fa-fw smaller-90"></i>
+        被删除
+      </span>
+      中的列出的文件，請即刻通過FTP或其他工具檢查其文件的正確性，以確保網站功能的正常使用。
+    </li>
+    <li>
+      <span class="badge badge-success">
+        <i class="fas fa-question-circle fa-fw smaller-90"></i>
+        未知
+      </span>
+      中的列出的文件，請檢查網店是否被人非法放入了其他文件
+    </li>
+    <li>
+      <span class="badge badge-info">
+        <i class="fas fa-pencil-alt fa-fw smaller-80"></i>
+        一周内被修改
+      </span>
+      中列出的文件，請確認最近是否修改過。
+    </li>
+  </ul>
+</div>
+
+<!-- {^if $dirlog^} -->
+<!-- {^foreach from=$dirlog key=dir item=status^} -->
+<div class="widget-box widget-color-blue2">
+  <div class="widget-header">
+    <h5 class="widget-title bigger lighter">
+      <i class="fas fa-folder-open fa-fw"></i>
+      {^$dir^}/
+    </h5>
+    <div class="widget-toolbar">
+      <a href="#" data-action="collapse">
+        <i class="fas fa-chevron-up"></i>
+      </a>
+    </div>
+    <div class="widget-toolbar no-border">
+      <!-- {^foreach from=$status key=type item=nums^} -->
+      <!-- {^if $type eq 'modify'^} -->
+      <span class="badge badge-warning">
+        <i class="fas fa-exclamation-triangle fa-fw smaller-80"></i>
+        <span class="hidden-xs">被修改：</span>{^$nums^}
+      </span>
+      <!-- {^/if^} -->
+      <!-- {^if $type eq 'del'^} -->
+      <span class="badge badge-danger">
+        <i class="fas fa-trash-alt fa-fw smaller-90"></i>
+        <span class="hidden-xs">被删除：</span>{^$nums^}
+      </span>
+      <!-- {^/if^} -->
+      <!-- {^if $type eq 'add'^} -->
+      <span class="badge badge-success">
+        <i class="fas fa-question-circle fa-fw smaller-90"></i>
+        <span class="hidden-xs">未知：</span>{^$nums^}
+      </span>
+      <!-- {^/if^} -->
+      <!-- {^/foreach^} -->
+    </div>
+  </div>
+  <div class="widget-body">
+    <div class="widget-main no-padding">
+      <table class="table table-striped table-bordered table-hover">
+        <thead class="thin-border-bottom">
+          <tr>
+            <th class="text-center">文件名</th>
+            <th class="text-center hidden-xs">文件大小</th>
+            <th class="text-center hidden-xs">最後修改時間</th>
+            <th class="text-center">狀態</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- {^foreach from=$filelist key=dirs item=files^} -->
+          <!-- {^if $dirs eq $dir^}-->
+          <!-- {^foreach from=$files item=file^} -->
+          <tr>
+            <td>
+              <div>
+                <div class="visible-xs pull-right">{^$file.size^}</div>
+                <i class="far fa-file-alt fa-fw"></i>
+                {^$file.file^}
+              </div>
+              <div class="visible-xs text-right">
+                <i class="far fa-clock fa-fw blue"></i>
+                {^$file.filemtime^}
+              </div>
+            </td>
+            <td class="text-right hidden-xs">
+              {^$file.size^}
+            </td>
+            <td class="text-center hidden-xs">
+              {^$file.filemtime^}
+            </td>
+            <td class="text-center">
+              {^$file.status^}
+            </td>
+          </tr>
+          <!-- {^/foreach^} -->
+          <!-- {^/if^} -->
+          <!-- {^/foreach^} -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- {^/foreach^} -->
+<!-- {^/if^} -->
+<!-- {^/if^} -->

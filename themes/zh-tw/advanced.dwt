@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!-- Meta -->
+{^assign
+  var="nav_breadcrumb"
+  value=[
+    ['text'=>'進階搜尋']
+  ]
+^}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="{^$keywords|default^}">
+<meta name="description" content="{^$description|default|strip:''^}">
+<meta name="twitter:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta name="twitter:keywords" content="{^$keywords|default^}">
+<meta name="twitter:description" content="{^$description|default|strip:''^}">
+<meta name="twitter:site" content="{^link^}">
+<meta property="og:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta property="og:keywords" content="{^$keywords|default^}">
+<meta property="og:description" content="{^$description|default|strip:''^}">
+<meta property="og:url" content="{^link^}">
+<title>{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}</title>
+<base href="{^insert name='base_url' nocache=true^}" data-theme="{^$theme_dir|default^}" data-lang="{^$lang_code|default^}">
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon">
+<link href="favicon.ico" rel="shortcut icon">
+<link href="favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
+<link href="favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
+<link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+<link href="site.webmanifest" rel="manifest">
+<!-- Web Fonts -->
+<!-- CSS RWD Core -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- CSS Plugins -->
+<link href="assets/css/plugins.min.css" rel="stylesheet">
+<!-- CSS Customization -->
+<link href="assets/css/custom.min.css" rel="stylesheet">
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_head|default^}
+<!-- {^/if^} -->
+</head>
+<body>
+<main>
+  <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+  <div class="body-container">
+    <div class="page-banner-frame" data-parallax="scroll" data-image-src="assets/images/main-visual-m1.jpg">
+      <div class="mask"></div>
+      <h1>進階搜尋</h1>
+    </div>
+    <section class="info-wrapper">
+      <div class="form-theme">
+        <form name="form" method="get" action="search.php" class="form-horizontal" autocomplete="off">
+        <div class="form-group form-row">
+          <label class="col-md-2 text-md-right col-form-label">關鍵字</label>
+          <div class="col-md-9">
+            <input type="text" name="q" class="form-control">
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 text-md-right col-form-label">調名</label>
+          <div class="col-md-9">
+            <input type="text" name="o[tune]" class="form-control">
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 text-md-right col-form-label">韻律</label>
+          <div class="col-md-9">
+            <input type="text" name="o[rhythm]" class="form-control">
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 text-md-right col-form-label">版權</label>
+          <div class="col-md-9">
+            <input type="text" name="o[copyright]" class="form-control">
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 text-md-right col-form-label">編者</label>
+          <div class="col-md-9">
+            <input type="text" name="o[author]" class="form-control">
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 text-md-right col-form-label">編制</label>
+          <div class="col-md-9">
+            <input type="text" name="o[prepared]" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group form-row">
+          <label class="col-md-2 text-md-right col-form-label">准印者</label>
+          <div class="col-md-9">
+            <input type="text" name="o[print]" class="form-control">
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 text-md-right col-form-label">出版者</label>
+          <div class="col-md-9">
+            <input type="text" name="o[publisher]" class="form-control">
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-secondary btn-hover-shadow"> 搜尋 </button>
+        </div>
+        </form>
+      </div>
+    </section>
+  </div>
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</main>
+<script async src="assets/js/plugins/require.min.js" data-main="assets/js/require-config.js"></script>
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_body|default^}
+<!-- {^/if^} -->
+</body>
+</html>

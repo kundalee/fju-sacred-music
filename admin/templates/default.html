@@ -1,0 +1,124 @@
+<!-- {^include file="common/header.html" controller="Dashboards"^} -->
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel">
+      <div class="panel-heading">
+        <i class="fas fa-signal fa-fw"></i>
+        綜合到訪量
+      </div>
+      <div class="panel-body">
+        <div id="chart-view" data-chart-option='{^$stats.flow.option|json_encode^}'></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel">
+      <div class="panel-heading">
+        <i class="fas fa-signal fa-fw"></i>
+        來源網站
+      </div>
+      <div class="panel-body">
+        <div id="chart-from" data-chart-option='{^$stats.referer_domain.option|json_encode^}'></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel">
+      <div class="panel-heading">
+        <i class="fas fa-signal fa-fw"></i>
+        作業系統
+      </div>
+      <div class="panel-body">
+        <div id="chart-system" data-chart-option='{^$stats.system.option|json_encode^}'></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- {^sys^} -->
+  <div class="col-md-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <i class="fas fa-signal fa-fw"></i>
+        系統資料
+      </div>
+      <table class="table table-striped table-bordered hidden-xs hidden-sm">
+        <tr>
+          <td class="text-right">伺服器操作系統：</td>
+          <td>{^$sys_info.os^}</td>
+          <td class="text-right">Web 伺服器：</td>
+          <td>{^$sys_info.web_server^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">PHP 版本：</td>
+          <td>{^$sys_info.php_ver^}</td>
+          <td class="text-right">Database 版本：</td>
+          <td>{^$sys_info.sql_ver^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Smarty 版本：</td>
+          <td>{^$sys_info.smarty_ver^}</td>
+          <td class="text-right">PHPMailer 版本：</td>
+          <td>{^$sys_info.phpmailer_ver^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">GD 版本：</td>
+          <td>{^$sys_info.gd^}</td>
+          <td class="text-right">檔案上傳的最大大小：</td>
+          <td>{^$sys_info.max_filesize^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">安全模式：</td>
+          <td>{^$sys_info.safe_mode^}</td>
+          <td class="text-right">安全模式GID：</td>
+          <td>{^$sys_info.safe_mode_gid^}</td>
+        </tr>
+      </table>
+
+      <table class="table table-striped table-bordered visible-xs visible-sm">
+        <tr>
+          <td class="text-right">伺服器操作系統：</td>
+          <td>{^$sys_info.os^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Web 伺服器：</td>
+          <td>{^$sys_info.web_server^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">PHP 版本：</td>
+          <td>{^$sys_info.php_ver^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Database 版本：</td>
+          <td>{^$sys_info.sql_ver^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">Smarty 版本：</td>
+          <td>{^$sys_info.smarty_ver^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">PHPMailer 版本：</td>
+          <td>{^$sys_info.phpmailer_ver^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">GD 版本：</td>
+          <td>{^$sys_info.gd^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">檔案上傳的最大大小：</td>
+          <td>{^$sys_info.max_filesize^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">安全模式：</td>
+          <td>{^$sys_info.safe_mode^}</td>
+        </tr>
+        <tr>
+          <td class="text-right">安全模式GID：</td>
+          <td>{^$sys_info.safe_mode_gid^}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!-- {^/sys^} -->
+</div>

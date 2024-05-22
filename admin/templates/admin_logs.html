@@ -1,0 +1,125 @@
+<!-- {^if $full_page^} -->
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="AdminLogs"^} -->
+<div class="panel">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-6">
+        <form method="post" name="search-form" class="form-inline" action="{^$smarty.server.SCRIPT_FILENAME|basename^}">
+        <label>
+          按IP位置查看&nbsp;
+        </label>
+        <div class="input-group">
+          <select name="ip" class="form-control custom-select">
+            <option value="0">選擇IP位置...</option>
+            {^html_options options=$ip_list selected=$admin_ip^}
+          </select>
+          <span class="input-group-btn">
+            <button type="submit" class="btn">
+              確定
+            </button>
+          </span>
+        </div>
+        </form>
+      </div>
+      <div class="space-2 visible-xs visible-sm"></div>
+      <div class="col-md-6">
+        <form method="post" name="drop-form" class="form-inline" action="{^$smarty.server.SCRIPT_FILENAME|basename^}">
+        <input type="hidden" name="action" value="batch_drop">
+        <input type="hidden" name="drop_type_date" value="1">
+        <label>
+          清除紀錄&nbsp;
+        </label>
+        <div class="input-group">
+          <select name="log_date" class="form-control custom-select">
+            <option value="0">選擇日期...</option>
+            <option value="1">一周之前</option>
+            <option value="2">一個月之前</option>
+            <option value="3">三個月之前</option>
+            <option value="4">半年之前</option>
+            <option value="5">一年之前</option>
+          </select>
+          <span class="input-group-btn">
+            <button type="submit" class="btn">
+              確定
+            </button>
+          </span>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="list-form">
+<input type="hidden" name="action" value="batch_drop">
+<div id="list-div" data-record-count='{^$record_count^}' data-page-count='{^$page_count^}' data-filter='{^$filter|default|json_encode^}'>
+<!-- {^/if^} -->
+  <div class="panel table-light"{^if not $full_page^} assign-query-info="{^$query_info|default^}" assign-gzip-enabled="{^$gzip_enabled|default^}" assign-memory-info="{^$memory_info|default^}"{^/if^}>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center px-width-30 hidden-xs hidden-sm">
+            <label class="custom-checkbox">
+              <input type="checkbox" data-row-multi="true" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+            </label>
+          </th>
+          <th data-field-sort="admin_name" class="text-center px-width-180 hidden-xs">
+            <span class="pull-right"><i class="fas fa-sort-amount{^$sort_admin_name|default^}"></i></span>
+            操作者
+          </th>
+          <th data-field-sort="log_time" class="text-center px-width-180 hidden-xs">
+            <span class="pull-right"><i class="fas fa-sort-amount{^$sort_log_time|default^}"></i></span>
+            操作日期
+          </th>
+          <th data-field-sort="ip_address" class="text-center px-width-130 hidden-xs hidden-sm">
+            <span class="pull-right"><i class="fas fa-sort-amount{^$sort_ip_address|default^}"></i></span>
+            IP位置
+          </th>
+          <th class="text-center hidden-xs">操作記錄</th>
+          <th data-field-sort="log_time" class="text-center visible-xs">
+            <span class="pull-right"><i class="fas fa-sort-amount{^$sort_log_time|default^}"></i></span>
+            操作日期
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- {^foreach from=$item_arr item=item name=list^} -->
+        <tr data-item-id="{^$item.log_id^}">
+          <td class="text-center hidden-xs hidden-sm">
+            <label class="custom-checkbox">
+              <input type="checkbox" name="checkboxes[]" value="{^$item.log_id^}" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+            </label>
+          </td>
+          <td class="text-center hidden-xs">{^$item.admin_name^}</td>
+          <td class="text-center hidden-xs">
+            {^$item.log_time^}
+          </td>
+          <td class="text-center hidden-xs hidden-sm">{^$item.ip_address^}</td>
+          <td class="hidden-xs">{^$item.log_info^}</td>
+          <td class="visible-xs">
+            <div>
+              <span class="pull-right text-muted small">{^$item.log_time^}</span>
+              <span class="text-info">{^$item.admin_name^}</span>
+            </div>
+            <div>{^$item.log_info^}</div>
+            <div class="text-muted small">{^$item.ip_address^}</div>
+          </td>
+        </tr>
+        <!-- {^foreachelse^} -->
+        <tr><td class="no-records" colspan="6">目前沒有任何記錄</td></tr>
+        <!-- {^/foreach^} -->
+      </tbody>
+    </table>
+  </div>
+  <div class="pull-left hidden-xs hidden-sm">
+    <button type="submit" name="drop_type_id" class="btn btn-danger btn-sm" disabled>
+      清除紀錄
+    </button>
+  </div>
+  <div class="pull-right text-right">{^include file="common/page.html"^}</div>
+<!-- {^if $full_page^} -->
+</div>
+</form>
+<!-- {^/if^} -->

@@ -1,0 +1,354 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="BookForm"^} -->
+<div class="panel">
+  <form method="post" name="the-form" action="{^$smarty.server.SCRIPT_FILENAME|basename^}" class="form-horizontal">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <input type="hidden" name="book_id" value="{^$data.book_id^}">
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs"{^if $data.book_id^} data-page-code="{^$smarty.const.SCRIPT_NAME^}-id-{^$data.book_id^}"{^/if^}>
+      <li>
+        <a href="#edit-general">
+          <i class="fas fa-edit fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+      <li>
+        <a href="#edit-relation-song">
+          <i class="fas fa-exchange-alt"></i>
+          關連歌曲
+        </a>
+      </li>
+      <li>
+        <a href="#edit-other">
+          <i class="fas fa-cog fa-fw"></i>
+          其他資料
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">歌本內碼</label>
+              <div class="col-md-10">
+                <input type="text" name="book_code" value="{^$data.book_code|default|escape^}" maxlength="11" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">歌本書名</label>
+              <div class="col-md-10">
+                <input type="text" name="book_title" value="{^$data.book_title|default|escape^}" class="form-control">
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">編目索引號</label>
+                  <div class="col-md-8">
+                    <input type="text" name="catalog_no" value="{^$data.catalog_no|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">編者</label>
+                  <div class="col-md-8">
+                    <input type="text" name="author" value="{^$data.author|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">出版者</label>
+                  <div class="col-md-8">
+                    <input type="text" name="publisher" value="{^$data.publisher|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">歌曲數</label>
+                  <div class="col-md-8">
+                    <input type="text" name="song_num" value="{^$data.song_num|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">頁數</label>
+                  <div class="col-md-8">
+                    <input type="text" name="page_num" value="{^$data.page_num|default|escape^}" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">准印者</label>
+                  <div class="col-md-8">
+                    <input type="text" name="quasi_print" value="{^$data.quasi_print|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">出版時間</label>
+                  <div class="col-md-8">
+                    <input type="text" name="first_edit_time" value="{^$data.first_edit_time|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">版本資訊</label>
+                  <div class="col-md-8">
+                    <input type="text" name="ver_info" value="{^$data.ver_info|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">印刷方式</label>
+                  <div class="col-md-8">
+                    <input type="text" name="print_method" value="{^$data.print_method|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">使用語言</label>
+                  <div class="col-md-8">
+                    <input type="text" name="song_lang" value="{^$data.song_lang|default|escape^}" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">內容簡述</label>
+              <div class="col-md-10">
+                <textarea name="book_brief" rows="3" class="form-control">{^$data.book_brief|default|escape^}</textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">管理者備註</label>
+              <div class="col-md-10">
+                <textarea name="admin_note" rows="3" class="form-control">{^$data.admin_note|default|escape^}</textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">
+                <span class="help-button" title="說明訊息" data-plugins="popover" data-trigger="hover" data-placement="top" data-html="true" data-content="最佳尺寸：[ {^$picture_large^} ]<br>上傳限制：4 M<br>上傳格式：GIF&nbsp;|&nbsp;JPG&nbsp;|&nbsp;PNG">?</span>
+                歌本圖片
+              </label>
+              <div class="col-md-10">
+                <input type="hidden" name="picture_large" value="{^$data.picture_large^}">
+                <div class="row">
+                  <div class="col-md-4">
+                    <button type="button" data-load-init="performed" data-file-upload="picture_large" data-upload-mime-types='[{"title":"Image files","extensions":"jpg,gif,png,jpeg"}]' data-upload-max-file-size="10mb" data-element-options="{'showUploadButton':true,'doneProgress':true}" class="btn btn-primary btn-block">
+                      <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                      選擇檔案
+                    </button>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="file-list"></div>
+                  </div>
+                </div>
+                <!-- {^if $data.picture_large^} -->
+                <p class="help-block picture-file-help">
+                  你已經上傳過圖案，再次上傳時將覆蓋原圖案！
+                  <a href="{^$smarty.const.BASE_URL^}{^$data.picture_large^}" data-plugins="magnific-popup" target="_blank" class="btn btn-outline btn-xs">
+                    <i class="far fa-image fa-fw"></i>
+                    放大
+                  </a>
+                  <a href="#" data-toggle="remove" data-row-id="{^$data.book_id^}" class="btn btn-outline btn-xs btn-danger">
+                    <i class="fas fa-trash-alt fa-fw"></i>
+                    刪除
+                  </a>
+                </p>
+                <!-- {^/if^} -->
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">標籤</label>
+              <div class="col-md-10">
+                <input type="text" name="tags" value="{^$data.tags|default|escape^}" data-plugins="selectize-text" data-options='{"options":{^$tag_options|json_encode^}}' class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">顯示封面圖</label>
+                  <div class="col-md-8">
+                    <label class="switcher switcher-rounded switcher-blank">
+                      <input type="checkbox" name="show_img" value="1"{^if $data.show_img eq 1^} checked{^/if^}>
+                      <div class="switcher-indicator">
+                        <div class="switcher-yes">
+                          <i class="fas fa-check"></i>
+                        </div>
+                        <div class="switcher-no">
+                          <i class="fas fa-times"></i>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">是否顯示</label>
+                  <div class="col-md-8">
+                    <label class="switcher switcher-rounded switcher-blank">
+                      <input type="checkbox" name="is_open" value="1"{^if $data.is_open eq 1^} checked{^/if^}>
+                      <div class="switcher-indicator">
+                        <div class="switcher-yes">
+                          <i class="fas fa-check"></i>
+                        </div>
+                        <div class="switcher-no">
+                          <i class="fas fa-times"></i>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="edit-relation-song" class="tab-pane">
+        <div class="space-10"></div>
+        <div class="form-search">
+          <div class="inline">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-search"></i>
+              </span>
+              <input type="text" name="search_keyword" placeholder="關鍵字" class="form-control ajax-song-search">
+              <span class="input-group-btn">
+                <button type="button" id="search-song-button" class="btn btn-info">
+                  搜尋
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="space-6"></div>
+
+        <div class="row">
+
+          <div class="col-sm-6">
+            <div class="panel panel-primary panel-dark">
+              <div class="panel-heading">
+                <span class="panel-title">
+                  可加入歌曲
+                </span>
+              </div>
+              <div class="panel-body no-padding">
+                <div style="height:300px;" id="search-song-items" class="widget-main scrollable">
+
+                </div>
+              </div>
+              <div class="panel-footer">
+                <div class="btn-group btn-group-sm">
+                  <button type="button" id="join-checked-true-button" class="btn btn-sm">
+                    選取全部
+                  </button>
+                  <button type="button" id="join-checked-false-button" class="btn btn-sm">
+                    取消選取
+                  </button>
+                  <button type="button" id="join-define-song" class="btn btn-sm">
+                    加入關連
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="panel panel-primary panel-dark">
+              <div class="panel-heading">
+                <span class="panel-title">
+                  已加入歌曲
+                </span>
+              </div>
+              <div class="panel-body no-padding">
+                <div style="height:300px;" id="define-song-items" class="widget-main scrollable">
+                </div>
+              </div>
+
+              <div class="panel-footer">
+                <div class="btn-group btn-group-sm">
+                  <button type="button" id="update-checked-true-button" class="btn btn-sm">
+                    選取全部
+                  </button>
+                  <button type="button" id="update-checked-false-button" class="btn btn-sm">
+                    取消選取
+                  </button>
+                  <button type="button" id="drop-define-song" class="btn btn-sm">
+                    刪除關連
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="edit-other" class="tab-pane">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁標題</label>
+              <div class="col-md-10">
+                <input type="text" name="page_title" value="{^$data.page_title|default|escape^}" class="form-control">
+                <p class="help-block text-muted small">
+                  網頁的標題將顯示在瀏覽器的標題欄
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁關鍵詞</label>
+              <div class="col-md-10">
+                <input type="text" name="meta_keywords" value="{^$data.meta_keywords|default|escape^}" data-plugins="selectize-text" class="form-control">
+                <p class="help-block text-muted small">
+                  用於定義網頁關鍵詞，提供搜尋引擎分類網頁使用的<br>
+                  最大長度建議不要大於 60 個字(最多不超過 5 個關鍵字)
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁簡短描述</label>
+              <div class="col-md-10">
+                <textarea name="meta_description" rows="3" class="form-control">{^$data.meta_description|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  用於定義網頁簡短描述，提供搜尋引擎描述網頁使用的<br>
+                  最大長度建議不要大於 160 個字
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">統計代碼</label>
+              <div class="col-md-10">
+                <textarea name="page_code_head" rows="6" class="form-control">{^$data.page_code_head|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  您可以將其他訪問統計服務商提供的代碼新增到每一個頁面(&lt;/head&gt;之前)
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">統計代碼</label>
+              <div class="col-md-10">
+                <textarea name="page_code_body" rows="6" class="form-control">{^$data.page_code_body|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  您可以將其他訪問統計服務商提供的代碼新增到每一個頁面(&lt;/body&gt;之前)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

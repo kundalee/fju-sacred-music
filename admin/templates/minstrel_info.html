@@ -1,0 +1,206 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="MinstrelForm"^} -->
+<div class="panel">
+  <form method="post" name="the-form" action="{^$smarty.server.SCRIPT_FILENAME|basename^}" class="form-horizontal">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <input type="hidden" name="minstrel_id" value="{^$data.minstrel_id^}">
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs"{^if $data.minstrel_id^} data-page-code="{^$smarty.const.SCRIPT_NAME^}-id-{^$data.minstrel_id^}"{^/if^}>
+      <li>
+        <a href="#edit-general">
+          <i class="fas fa-edit fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+      <li>
+        <a href="#edit-other">
+          <i class="fas fa-cog fa-fw"></i>
+          其他資料
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">國籍</label>
+                  <div class="col-md-8">
+                    <input type="text" name="nationality" value="{^$data.nationality|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">中文姓名</label>
+                  <div class="col-md-8">
+                    <input type="text" name="chinese_name" value="{^$data.chinese_name|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">原文姓名</label>
+                  <div class="col-md-8">
+                    <input type="text" name="original_name" value="{^$data.original_name|default|escape^}" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">內部代碼</label>
+                  <div class="col-md-8">
+                    <input type="text" name="minstrel_code" value="{^$data.minstrel_code|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">出生年代</label>
+                  <div class="col-md-8">
+                    <input type="text" name="birthday_date" value="{^$data.birthday_date|default|escape^}" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">逝世年代</label>
+                  <div class="col-md-8">
+                    <input type="text" name="doom_date" value="{^$data.doom_date|default|escape^}" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">簡要資訊</label>
+              <div class="col-md-10">
+                <textarea name="brief_info" rows="3" class="form-control">{^$data.brief_info|default|escape^}</textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">
+                <span class="help-button" title="說明訊息" data-plugins="popover" data-trigger="hover" data-placement="top" data-html="true" data-content="最佳尺寸：[ {^$picture_large^} ]<br>上傳限制：4 M<br>上傳格式：GIF&nbsp;|&nbsp;JPG&nbsp;|&nbsp;PNG">?</span>
+                照片
+              </label>
+              <div class="col-md-10">
+                <input type="hidden" name="picture_large" value="{^$data.picture_large^}">
+                <div class="row">
+                  <div class="col-md-4">
+                    <button type="button" data-load-init="performed" data-file-upload="picture_large" data-upload-mime-types='[{"title":"Image files","extensions":"jpg,gif,png,jpeg"}]' data-upload-max-file-size="10mb" data-element-options="{'showUploadButton':true,'doneProgress':true}" class="btn btn-primary btn-block">
+                      <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                      選擇檔案
+                    </button>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="file-list"></div>
+                  </div>
+                </div>
+                <!-- {^if $data.picture_large^} -->
+                <p class="help-block picture-file-help">
+                  你已經上傳過圖案，再次上傳時將覆蓋原圖案！
+                  <a href="{^$smarty.const.BASE_URL^}{^$data.picture_large^}" data-plugins="magnific-popup" target="_blank" class="btn btn-outline btn-xs">
+                    <i class="far fa-image fa-fw"></i>
+                    放大
+                  </a>
+                  <a href="#" data-toggle="remove" data-row-id="{^$data.minstrel_id^}" class="btn btn-outline btn-xs btn-danger">
+                    <i class="fas fa-trash-alt fa-fw"></i>
+                    刪除
+                  </a>
+                </p>
+                <!-- {^/if^} -->
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">
+                    <span class="help-button" title="說明訊息" data-plugins="popover" data-trigger="hover" data-placement="top" data-html="true" data-content="上傳限制：{^$upload_max_filesize|format_byte^}">?</span>
+                    內部檔案
+                  </label>
+                  <div class="col-md-8">
+                    <button type="button" data-load-init="performed" data-file-upload="file_url" data-upload-mime-types='[{"title":"Media files","extensions":"mp3"}]' class="btn btn-primary btn-block">
+                      <i class="fas fa-cloud-upload-alt fa-fw"></i>
+                      選擇檔案
+                    </button>
+                    <div class="file-list"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">或輸入檔案地址</label>
+                  <div class="col-md-8">
+                    <input type="text" name="file_url" value="{^$data.file_url|default|escape^}" maxlength="255" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div id="edit-other" class="tab-pane">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁標題</label>
+              <div class="col-md-10">
+                <input type="text" name="page_title" value="{^$data.page_title|default|escape^}" class="form-control">
+                <p class="help-block text-muted small">
+                  網頁的標題將顯示在瀏覽器的標題欄
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁關鍵詞</label>
+              <div class="col-md-10">
+                <input type="text" name="meta_keywords" value="{^$data.meta_keywords|default|escape^}" data-plugins="selectize-text" class="form-control">
+                <p class="help-block text-muted small">
+                  用於定義網頁關鍵詞，提供搜尋引擎分類網頁使用的<br>
+                  最大長度建議不要大於 60 個字(最多不超過 5 個關鍵字)
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">網頁簡短描述</label>
+              <div class="col-md-10">
+                <textarea name="meta_description" rows="3" class="form-control">{^$data.meta_description|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  用於定義網頁簡短描述，提供搜尋引擎描述網頁使用的<br>
+                  最大長度建議不要大於 160 個字
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">統計代碼</label>
+              <div class="col-md-10">
+                <textarea name="page_code_head" rows="6" class="form-control">{^$data.page_code_head|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  您可以將其他訪問統計服務商提供的代碼新增到每一個頁面(&lt;/head&gt;之前)
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label no-padding-right">統計代碼</label>
+              <div class="col-md-10">
+                <textarea name="page_code_body" rows="6" class="form-control">{^$data.page_code_body|default|escape^}</textarea>
+                <p class="help-block text-muted small">
+                  您可以將其他訪問統計服務商提供的代碼新增到每一個頁面(&lt;/body&gt;之前)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

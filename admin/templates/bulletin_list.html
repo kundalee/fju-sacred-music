@@ -1,0 +1,181 @@
+<!-- {^if $full_page^} -->
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="BulletinList"^} -->
+<div class="panel panel-primary panel-dark collapsed">
+  <div class="panel-heading">
+    <span class="panel-title">
+      <i class="fas fa-search fa-fw"></i>
+      進階查詢
+    </span>
+    <div class="panel-heading-icon">
+      <a href="#" data-action="collapse">
+        <i class="fas fa-chevron-down"></i>
+      </a>
+    </div>
+  </div>
+  <div class="panel-main">
+    <form method="post" name="search-form">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>分類</label>
+            <select name="category[]" placeholder="請選擇..." class="form-control" data-plugins="selectize-multiple" multiple>
+              <option value="">請選擇...</option>
+              <!-- {^foreach from=$category_options item=cat^} -->
+              <option value="{^$cat.cat_id^}" data-text="{^$cat.tree_name|default^}">{^'&nbsp;'|str_repeat:(4*$cat.level)^}{^$cat.cat_name^}</option>
+              <!-- {^/foreach^} -->
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>標題</label>
+            <input type="text" name="keyword" value="{^$filter.keyword|default|escape^}" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer text-center">
+      <button type="submit" class="btn btn-success">
+        搜尋
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+    </form>
+  </div>
+</div>
+
+<form method="post" name="list-form" action="{^$smarty.server.SCRIPT_FILENAME|basename^}">
+<input type="hidden" name="action" value="batch_remove">
+<div id="list-div" data-remove-text="您確認要刪除這筆資料嗎？" data-record-count='{^$record_count^}' data-page-count='{^$page_count^}' data-filter='{^$filter|default|json_encode^}'>
+<!-- {^/if^} -->
+  <div class="panel table-light"{^if not $full_page^} assign-query-info="{^$query_info|default^}" assign-gzip-enabled="{^$gzip_enabled|default^}" assign-memory-info="{^$memory_info|default^}"{^/if^}>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center px-width-30 hidden-xs hidden-sm">
+            <label class="custom-checkbox">
+              <input type="checkbox" data-row-multi="true" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+            </label>
+          </th>
+          <th data-field-sort="title" class="text-center">
+            <span class="pull-right"><i class="fa-fw fas fa-sort-amount{^$sort_title|default^}"></i></span>
+            標題
+          </th>
+          <th data-field-sort="release_start_time" class="text-center px-width-120 hidden-xs">
+            <span class="pull-right"><i class="fa-fw fas fa-sort-amount{^$sort_release_start_time|default^}"></i></span>
+            發布時間
+          </th>
+          <th data-field-sort="is_open" class="text-center px-width-100 hidden-xs hidden-sm hidden-md">
+            <span class="pull-right"><i class="fa-fw fas fa-sort-amount{^$sort_is_open|default^}"></i></span>
+            是否顯示
+          </th>
+          <th data-field-sort="sort_order" class="text-center px-width-80 hidden-xs">
+            <span class="pull-right"><i class="fa-fw fas fa-sort-amount{^$sort_sort_order|default^}"></i></span>
+            排序
+          </th>
+          <th class="text-center px-width-160 hidden-xs hidden-sm">
+            操作
+          </th>
+          <th class="text-center px-width-50 visible-xs visible-sm">
+            操作
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- {^foreach from=$item_arr item=item name=list^} -->
+        <tr data-item-id="{^$item.bulletin_id^}">
+          <td class="text-center hidden-xs hidden-sm">
+            <label class="custom-checkbox">
+              <input type="checkbox" name="checkboxes[]" value="{^$item.bulletin_id^}" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+            </label>
+          </td>
+          <td>
+            <!-- {^if $item.relation_category^} -->
+            <div class="btn-group-sm">
+              <!-- {^foreach from=$item.relation_category item=cat_name^} -->
+              <button class="btn btn-outline btn-inline blue" type="button">{^$cat_name|escape^}</button>
+              <!-- {^/foreach^} -->
+            </div>
+            <div class="space-2"></div>
+            <!-- {^/if^} -->
+            {^$item.title|escape^}
+          </td>
+          <td class="text-center hidden-xs">
+            {^$item.release_start_time|date_format:'%Y-%m-%d'^} <br> ~
+            <!-- {^if $item.is_time eq 1^} -->
+            {^$item.release_end_time|date_format:'%Y-%m-%d'^}
+            <!-- {^else^} -->
+            無限制
+            <!-- {^/if^} -->
+          </td>
+          <td class="text-center hidden-xs hidden-sm hidden-md">
+            <label class="switcher switcher-rounded switcher-sm switcher-blank inline">
+              <input type="checkbox" data-cell-toggle="show"{^if $item.is_open eq 1^} checked{^/if^}>
+              <div class="switcher-indicator">
+                <div class="switcher-yes">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="switcher-no">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+            </label>
+          </td>
+          <td class="text-right hidden-xs"><span data-cell-edit="sort_order">{^$item.sort_order^}</span></td>
+          <td class="text-center hidden-xs hidden-sm">
+            <div class="btn-group-sm">
+              <a href="{^$smarty.const.BASE_URL^}{^$item.view_url^}" target="_blank" title="預覽" class="btn btn-outline btn-inverse">
+                <i class="fas fa-search fa-fw"></i>
+                預覽
+              </a>
+              <a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'copy','id':{^$item.bulletin_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" title="複製" class="btn btn-outline btn-warning">
+                <i class="fas fa-copy fa-fw"></i>
+                複製
+              </a>
+            </div>
+            <div class="space-2"></div>
+            <div class="btn-group-sm">
+              <a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'edit','id':{^$item.bulletin_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" title="編輯" class="btn btn-outline btn-info">
+                <i class="fas fa-pencil-alt fa-fw"></i>
+                編輯
+              </a>
+              <a href="#" title="刪除" class="btn btn-outline btn-danger" data-item-handler="remove">
+                <i class="fas fa-trash-alt fa-fw"></i>
+                刪除
+              </a>
+            </div>
+          </td>
+          <td class="text-center visible-xs visible-sm">
+            <div class="dropdown">
+              <button type="button" class="btn btn-sm btn-outline btn-outline-colorless dropdown-toggle" data-toggle="dropdown" aria-expanded="false" data-position="auto">
+                <i class="fas fa-bars"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <li><a href="{^$smarty.const.BASE_URL^}{^$item.view_url^}" target="_blank" title="預覽"><i class="dropdown-icon fas fa-search fa-fw"></i>&nbsp;&nbsp;預覽</a></li>
+                <li><a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'copy','id':{^$item.bulletin_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" title="複製"><i class="dropdown-icon fas fa-copy fa-fw"></i>&nbsp;&nbsp;複製</a></li>
+                <li><a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'edit','id':{^$item.bulletin_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" class="text-info"><i class="dropdown-icon fas fa-pencil-alt fa-fw"></i>&nbsp;&nbsp;編輯</a></li>
+                <li><a href="#" data-item-handler="remove" class="text-danger"><i class="dropdown-icon fas fa-trash-alt fa-fw"></i>&nbsp;&nbsp;刪除</a></li>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <!-- {^foreachelse^} -->
+        <tr><td class="no-records" colspan="10">目前沒有任何記錄</td></tr>
+        <!-- {^/foreach^} -->
+      </tbody>
+    </table>
+  </div>
+  <div class="pull-left hidden-xs hidden-sm">
+    <button type="submit" class="btn btn-danger btn-sm" disabled>
+      批次刪除
+    </button>
+  </div>
+  <div class="pull-right text-right">{^include file="common/page.html"^}</div>
+<!-- {^if $full_page^} -->
+</div>
+</form>
+<!-- {^/if^} -->

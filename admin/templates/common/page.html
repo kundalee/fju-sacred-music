@@ -1,0 +1,28 @@
+<div class="btn-group">總計&nbsp;<span id="totalRecords">{^$record_count|format_number:3^}</span>&nbsp;個記錄分為&nbsp;<span id="totalPages">{^$page_count|format_number:3^}</span>&nbsp;頁目前第&nbsp;<span id="pageCurrent">{^$filter.page|format_number:3^}</span>&nbsp;頁<span class="hidden-xs hidden-sm hidden-md">，</span></div>
+<div class="space-4 hidden-lg"></div>
+<div class="btn-group hidden-xs">每頁&nbsp;</div>
+<div class="btn-group px-width-50">
+  <input id="pageSize" type="text" maxlength="4" class="form-control text-center input-sm" value="{^$filter.page_size^}">
+</div>
+<a href="#" id="gotoPageFirst" title="第一頁" class="btn btn-sm btn-outline">
+  <i class="visible-xs visible-sm fas fa-angle-double-left font-size-17"></i>
+  <span class="hidden-xs hidden-sm">第一頁</span>
+</a>
+<a href="#" id="gotoPagePrev" title="上一頁" class="btn btn-sm btn-outline">
+  <i class="visible-xs visible-sm fas fa-angle-left font-size-17"></i>
+  <span class="hidden-xs hidden-sm">上一頁</span>
+</a>
+<a href="#" id="gotoPageNext" title="下一頁" class="btn btn-sm btn-outline">
+  <i class="visible-xs visible-sm fas fa-angle-right font-size-17"></i>
+  <span class="hidden-xs hidden-sm">下一頁</span>
+</a>
+<a href="#" id="gotoPageLast" title="最末頁" class="btn btn-sm btn-outline">
+  <i class="visible-xs visible-sm fas fa-angle-double-right font-size-17"></i>
+  <span class="hidden-xs hidden-sm">最末頁</span>
+</a>
+&nbsp;
+<div class="btn-group">
+  <select id="gotoPage" class="form-control custom-select input-sm">
+    {^create_pages count=$page_count page=$filter.page^}
+  </select>
+</div>

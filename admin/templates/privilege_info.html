@@ -1,0 +1,205 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="PrivilegeForm"^} -->
+<div class="panel">
+  <form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="the-form" class="form-horizontal">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <input type="hidden" name="admin_id" value="{^$data.admin_id^}">
+  <input type="hidden" name="avatar_base64" value="">
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs">
+      <li class="active">
+        <a href="#edit-basic">
+          <i class="fas fa-user fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+      <!-- {^if $form_action eq "update_self"^} -->
+      <li>
+        <a href="#edit-password">
+          <i class="fas fa-key fa-fw"></i>
+          變更密碼
+        </a>
+      </li>
+      <!-- {^/if^} -->
+      <!-- {^if $form_action neq "update_self" and $priv_arr^} -->
+      <li>
+        <a href="#edit-purview">
+          <i class="fas fa-cog fa-fw"></i>
+          分派權限
+        </a>
+      </li>
+      <!-- {^/if^} -->
+    </ul>
+    <div class="tab-content">
+      <div id="edit-basic" class="tab-pane in active">
+        <div class="space-10"></div>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-1 text-center">
+            <div class="profile-picture">
+              <img id="profile-avatar" class="editable img-responsive editable-click editable-empty" alt="{^$data.admin_name|escape^}" src="{^if $data.avatar_url^}{^$smarty.const.BASE_URL^}{^$data.avatar_url^}{^else^}assets/images/avatar-picture.png{^/if^}">
+              <div class="ace-file-multiple hidden" style="width: 185px;">
+                <span data-title="Change Avatar" class="ace-file-container">
+                  <span data-action="upload" class="ace-file-name">
+                    <i class="ace-icon far fa-image"></i>
+                  </span>
+                </span>
+                <a href="#" class="remove show"><i class="fas fa-times"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="hr hr-8 dotted visible-xs visible-sm clearfix"></div>
+          <div class="col-md-7">
+            <!-- {^if $form_action neq "update_self" and $priv_arr and $select_role^} -->
+            <div class="form-group">
+              <label class="col-md-3 control-label no-padding-right">角色選擇</label>
+              <div class="col-md-9">
+                <select name="play_role[]" placeholder="請選擇..." class="form-control" data-plugins="selectize-multiple" multiple>
+                  <option value="">請選擇...</option>
+                  {^html_options options=$select_role selected=$data.play_role|default^}
+                </select>
+              </div>
+            </div>
+            <!-- {^/if^} -->
+
+            <div class="form-group has-info">
+              <label class="col-md-3 control-label no-padding-right">登入帳號</label>
+              <div class="col-md-9">
+                <input type="text" name="username" value="{^$data.admin_name|escape^}" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group has-info has-feedback clearfix">
+              <label class="col-md-3 control-label no-padding-right">電子信箱</label>
+              <div class="col-md-9">
+                <input type="text" name="email" value="{^$data.email|default|escape^}" class="form-control">
+                <i class="fas fa-envelope-open form-control-feedback"></i>
+              </div>
+            </div>
+
+            <!-- {^if $form_action neq "update_self"^} -->
+            <div class="form-group">
+              <label class="col-md-3 control-label no-padding-right">登入密碼</label>
+              <div class="col-md-9">
+                <!-- {^if $form_action eq "insert"^} -->
+                <input type="password" name="password" class="form-control">
+                <!-- {^else^} -->
+                <input type="password" name="new_password" class="form-control">
+                <!-- {^/if^} -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label no-padding-right">確認密碼</label>
+              <div class="col-md-9">
+                <input type="password" name="pwd_confirm" class="form-control">
+              </div>
+            </div>
+            <!-- {^/if^} -->
+            <div class="form-group">
+              <label class="col-md-3 control-label no-padding-right">姓名</label>
+              <div class="col-md-9">
+                <input type="text" name="full_name" value="{^$data.full_name|escape^}" class="form-control">
+              </div>
+            </div>
+            <!-- {^if $form_action neq "update_self"^} -->
+            <div class="form-group">
+              <label class="col-md-3 control-label no-padding-right">帳戶狀態</label>
+              <div class="col-md-9">
+                <label class="switcher switcher-rounded switcher-inline">
+                  <input type="checkbox" name="enabled" value="1"{^if $data.enabled eq 1^} checked{^/if^}>
+                  <div class="switcher-indicator">
+                    <div class="switcher-yes">
+                      <i class="fas fa-check"></i>
+                    </div>
+                    <div class="switcher-no">
+                      <i class="fas fa-times"></i>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <!-- {^/if^} -->
+            <!-- {^if $form_action eq "update_self"^} -->
+            <div class="form-group">
+              <label class="col-md-3 control-label no-padding-right">最後登錄</label>
+              <div class="col-md-9">
+                <p class="form-control-static">
+                  {^$data.last_login^}
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label no-padding-right">最後登錄 IP</label>
+              <div class="col-md-9">
+                <p class="form-control-static">
+                  {^$data.last_ip^}
+                </p>
+              </div>
+            </div>
+            <!-- {^/if^} -->
+          </div>
+        </div>
+      </div>
+
+      <!-- {^if $form_action eq "update_self"^} -->
+      <div id="edit-password" class="tab-pane">
+        <div class="space-10"></div>
+        <div class="alert alert-info">如果要修改密碼,請先填寫舊密碼,如留空,密碼保持不變</div>
+        <div class="form-group">
+          <label class="col-md-4 control-label no-padding-right">舊密碼</label>
+          <div class="col-md-5">
+            <input type="password" name="old_password" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-4 control-label no-padding-right">新密碼</label>
+          <div class="col-md-5">
+            <input type="password" name="new_password" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-4 control-label no-padding-right">確認密碼</label>
+          <div class="col-md-5">
+            <input type="password" name="pwd_confirm" class="form-control">
+          </div>
+        </div>
+      </div>
+      <!-- {^/if^} -->
+
+      <!-- {^if $form_action neq "update_self" and $priv_arr^} -->
+      <div id="edit-purview" class="tab-pane">
+
+        <!-- {^foreach from=$priv_arr key=key item=priv^} -->
+        <div class="panel panel-warning panel-dark">
+          <div class="panel-heading no-padding-left no-padding-right">
+            <label class="custom-checkbox checkbox-inline no-padding-top">
+              <input type="checkbox" name="chkGroup" value="{^$priv.priv_list^}" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+              &nbsp;{^$priv.action_name^}
+            </label>
+            <div class="panel-heading-icon">
+              <i class="fas fa-sliders-h"></i>
+            </div>
+          </div>
+          <div class="panel-body no-padding-left no-padding-right">
+            <!-- {^foreach from=$priv.priv key=priv_list item=list^} -->
+            <label class="custom-checkbox checkbox-inline">
+              <input type="checkbox" name="action_code[]" value="{^$priv_list^}" data-relevance="{^$list.relevance^}" class="custom-control-input"{^if $list.cando^} checked{^/if^}>
+              <span class="custom-control-indicator"></span>
+              &nbsp;{^$list.action_name^}
+            </label>
+            <!-- {^/foreach^} -->
+          </div>
+        </div>
+        <!-- {^/foreach^} -->
+      </div>
+      <!-- {^/if^} -->
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

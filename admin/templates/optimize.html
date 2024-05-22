@@ -1,0 +1,74 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="Optimize"^} -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel box bg-white text-default">
+          <div class="box-row">
+            <div class="box-cell p-x-3 p-y-1">
+              <div class="pull-xs-left font-weight-semibold font-size-12">資料分散總數</div>
+            </div>
+          </div>
+          <div class="box-row">
+            <div class="box-cell p-x-3 p-y-2">
+              <i class="box-bg-icon middle left text-danger font-size-40 fas fa-chart-pie fa-fw"></i>
+              <div class="pull-xs-right font-weight-semibold font-size-24 line-height-1">{^$num^}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel box bg-white text-default">
+          <div class="box-row">
+            <div class="box-cell p-x-3 p-y-1">
+              <div class="pull-xs-left font-weight-semibold font-size-12">已用空間</div>
+            </div>
+          </div>
+          <div class="box-row">
+            <div class="box-cell p-x-3 p-y-2">
+              <i class="box-bg-icon middle left text-info font-size-40 fas fa-chart-pie fa-fw"></i>
+              <div class="pull-xs-right font-weight-semibold font-size-24 line-height-1">{^$total^}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel table-light">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-responsive">
+          <thead>
+            <tr>
+              <th class="text-center">資料表</th>
+              <th class="text-center px-width-100 hidden-xs hidden-sm">資料列數</th>
+              <th class="text-center px-width-100 hidden-xs hidden-sm">資料大小</th>
+              <th class="text-center px-width-100 hidden-xs hidden-sm">索引大小</th>
+              <th class="text-center px-width-100">資料分散</th>
+              <th class="text-center px-width-100 hidden-xs hidden-sm hidden-md hidden-lg">型態</th>
+              <th class="text-center px-width-150 hidden-xs hidden-sm hidden-md hidden-lg">編碼與排序</th>
+              <th class="text-center px-width-180 hidden-xs hidden-sm hidden-md">最後更新時間</th>
+              <th class="text-center px-width-180 hidden-xs hidden-sm hidden-md hidden-lg">最後檢查時間</th>
+              <th class="text-center px-width-80">狀態</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- {^foreach from=$list item=item^} -->
+            <tr>
+              <td>{^$item.table^}</td>
+              <td class="text-right hidden-xs hidden-sm">{^$item.rec_rows|default:'-'^}</td>
+              <td class="text-right hidden-xs hidden-sm">{^$item.rec_data_len^}</td>
+              <td class="text-right hidden-xs hidden-sm">{^$item.rec_index_len^}</td>
+              <td class="text-right">{^$item.rec_data_free^}</td>
+              <td class="text-center hidden-xs hidden-sm hidden-md hidden-lg">{^$item.type|default:'-'^}</td>
+              <td class="text-center hidden-xs hidden-sm hidden-md hidden-lg">{^$item.charset|default:'-'^}</td>
+              <td class="text-center hidden-xs hidden-sm hidden-md">{^$item.rec_update_time|format_date:'time_format'|default:'-'^}</td>
+              <td class="text-center hidden-xs hidden-sm hidden-md hidden-lg">{^$item.rec_check_time|format_date:'time_format'|default:'-'^}</td>
+              <td class="text-center">{^$item.status^}</td>
+            </tr>
+            <!-- {^/foreach^} -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<!-- {^if $full_page^} -->
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="BulletinCatList"^} -->
+<form action="{^$smarty.server.SCRIPT_FILENAME|basename^}" method="post" name="list-form">
+<div id="list-div" data-remove-text="您確定要刪除這筆資料嗎?">
+<!-- {^/if^} -->
+  <div class="panel table-light" ng-controller="ListTriggerHandlerCtrl">
+    <table class="table table-bordered table-hover table-tree">
+      <thead>
+        <tr>
+          <th class="text-center">名稱</th>
+          <th class="text-center px-width-100 hidden-xs">是否顯示</th>
+          <th class="text-center px-width-100 hidden-xs hidden-sm">排序</th>
+          <th class="text-center px-width-240 hidden-xs hidden-sm">
+            操作
+          </th>
+          <th class="text-center px-width-50 visible-xs visible-sm">
+            操作
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- {^foreach from=$cat_info item=item^} -->
+        <tr data-item-id="{^$item.cat_id^}" class="treegrid-{^$item.cat_id^}{^if $item.parent_id^} treegrid-parent-{^$item.parent_id^}{^/if^}">
+          <td>{^$item.cat_name|escape^}</td>
+          <td class="text-center hidden-xs">
+            <label class="switcher switcher-rounded switcher-sm switcher-blank inline">
+              <input type="checkbox" data-cell-toggle="show"{^if $item.is_show eq 1^} checked{^/if^}>
+              <div class="switcher-indicator">
+                <div class="switcher-yes">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="switcher-no">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+            </label>
+          </td>
+          <td class="text-center hidden-xs hidden-sm"><span data-cell-edit="sort_order">{^$item.sort_order^}</span></td>
+          <td class="text-center hidden-xs hidden-sm">
+            <div class="btn-group-sm">
+              <a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'move','id':{^$item.cat_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" title="編輯" class="btn btn-outline btn-purple">
+                <i class="fas fa-exchange-alt fa-fw"></i>
+                轉移
+              </a>
+              <a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'edit','id':{^$item.cat_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" title="編輯" class="btn btn-outline btn-info">
+                <i class="fas fa-pencil-alt fa-fw"></i>
+                編輯
+              </a>
+              <!-- {^if not $item.is_readonly^} -->
+              <a href="#" title="刪除" class="btn btn-outline btn-danger" data-item-handler="remove">
+                <i class="fas fa-trash-alt fa-fw"></i>
+                刪除
+              </a>
+              <!-- {^/if^} -->
+            </div>
+          </td>
+          <td class="text-center visible-xs visible-sm">
+            <div class="dropdown">
+              <button type="button" class="btn btn-sm btn-outline btn-outline-colorless dropdown-toggle" data-toggle="dropdown" aria-expanded="false" data-position="auto">
+                <i class="fas fa-bars"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <li><a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'move','id':{^$item.cat_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" title="轉移"><i class="dropdown-icon fas fa-exchange-alt fa-fw"></i>&nbsp;&nbsp;轉移</a></li>
+                <li><a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'edit','id':{^$item.cat_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" title="編輯"><i class="dropdown-icon fas fa-pencil-alt fa-fw"></i>&nbsp;&nbsp;編輯</a></li>
+                <!-- {^if not $item.is_readonly^} -->
+                <li><a href="#" data-item-handler="remove" class="text-danger"><i class="dropdown-icon fas fa-trash-alt fa-fw"></i>&nbsp;&nbsp;刪除</a></li>
+                <!-- {^/if^} -->
+              </div>
+            </div>
+          </td>
+        </tr>
+        <!-- {^foreachelse^} -->
+        <tr><td class="no-records" colspan="4">目前沒有任何記錄</td></tr>
+        <!-- {^/foreach^} -->
+      </tbody>
+    </table>
+  </div>
+<!-- {^if $full_page^} -->
+</div>
+</form>
+<!-- {^/if^} -->

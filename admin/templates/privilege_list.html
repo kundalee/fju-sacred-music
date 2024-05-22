@@ -1,0 +1,27 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="PrivilegeList"^} -->
+<div class="row">
+  <!-- {^foreach from=$html_siblings_tree item=item name=list^} -->
+  <div class="col-md-6">
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-title">{^$item.admin_name^}</span>
+        <div class="panel-heading-controls">
+          <a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'edit','id':{^$item.admin_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" class="btn btn-xs btn-success btn-outline btn-outline-colorless"><i class="fas fa-pencil-alt fa-fw"></i> 編輯</a>
+          <!-- {^if $item.remove^} -->
+          <a href="#" ui-sref="{^$smarty.const.SCRIPT_NAME^}({'action':'remove','id':{^$item.admin_id^}})" ui-sref-opts="{reload:'{^$smarty.const.SCRIPT_NAME^}',inherit:false}" class="btn btn-xs btn-danger btn-outline" data-item-handler="remove"><i class="fas fa-user-times fa-fw"></i> 刪除</a>
+          <!-- {^/if^} -->
+        </div>
+      </div>
+      <div class="panel-body js-siblings-nestable dd" data-parent-id="{^$item.admin_id^}">
+        <!-- {^if $item.html_tree^} -->
+        {^$item.html_tree^}
+        <!-- {^/if^} -->
+      </div>
+    </div>
+  </div>
+  <!-- {^if $smarty.foreach.list.iteration is div by 2^} -->
+  <div class="clearfix"></div>
+  <!-- {^/if^} -->
+  <!-- {^/foreach^} -->
+</div>

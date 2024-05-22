@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Meta -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>{^$shop_name^}</title>
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon">
+<link href="favicon.ico" rel="shortcut icon">
+<link href="apple-touch-icon.png" rel="apple-touch-icon">
+<!-- Web Fonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Noto+Sans|Noto+Sans+TC:100,300,400,500,700,900|Noto+Sans+SC:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+<!-- CSS RWD Core -->
+{^assign var="layout_theme" value=$ui_layout_cfg['theme']|default:'default'^}
+<!-- {^foreach from=['bs'=>'bootstrap','core'=>'pixeladmin','widgets'=>'widgets'] key=key item=val^} -->
+<link href="assets/css/{^$val^}{^if preg_match('/dark/i',$layout_theme)^}-dark{^/if^}{^if $ui_layout_cfg['rtl']|default^}.rtl{^/if^}.min.css" rel="stylesheet" class="px-stylesheet-{^$key^}">
+<!-- {^/foreach^} -->
+<!-- CSS Themes -->
+<link href="assets/css/themes/{^$layout_theme^}.min.css" rel="stylesheet" class="px-stylesheet-theme">
+<!-- CSS Customization -->
+<link href="assets/css/custom.css" rel="stylesheet">
+<script src="assets/js/plugins/pace.min.js"></script>
+</head>
+<body>
+<div class="page-signup-modal modal" ng-controller="PassportCtrl as vm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="text-xs-center bg-primary p-y-4">
+        <div class="px-brand px-brand-lg"><span class="px-logo bg-primary m-t-0"><span class="px-logo-1"></span><span class="px-logo-2"></span><span class="px-logo-3"></span><span class="px-logo-4"></span><span class="px-logo-5"></span><span class="px-logo-6"></span><span class="px-logo-7"></span><span class="px-logo-8"></span><span class="px-logo-9"></span></span><span class="font-size-20 line-height-1">{^$shop_name^}</span></div>
+      </div>
+
+      <!-- {^if $smarty.const.SCRIPT_NAME eq 'privilege'^} -->
+      <form action="privilege.php" method="post" name="the-form" autocomplete="off" class="p-a-4" id="page-signin-form">
+      <input type="hidden" name="action" value="signin">
+      <input type="hidden" name="ref" value="{^$smarty.get.ref|default^}">
+      <h4 class="m-t-0 m-b-4 text-xs-center font-weight-semibold">登錄到您的帳戶</h4>
+
+      <fieldset class="page-signin-form-group form-group form-group-lg">
+        <div class="page-signin-icon text-muted"><i class="fas fa-user"></i></div>
+        <input type="text" name="username" class="page-signin-form-control form-control" placeholder="使用者名稱">
+      </fieldset>
+
+      <fieldset class="page-signin-form-group form-group form-group-lg">
+        <div class="page-signin-icon text-muted"><i class="fas fa-lock"></i></div>
+        <input type="password" name="password" class="page-signin-form-control form-control" placeholder="登入密碼">
+      </fieldset>
+
+      <fieldset class="page-signin-form-group form-group form-group-lg">
+        <div class="page-signin-icon text-muted"><i class="fas fa-key"></i></div>
+        <input type="text" name="captcha" class="page-signin-form-control form-control" placeholder="驗證碼">
+      </fieldset>
+
+      <fieldset class="page-signin-form-group form-group form-group-lg">
+        <img id="captcha-img" width="145" height="32" src="./?action=captcha&{^$smarty.now^}" alt="看不清楚？點此更換另一個驗證碼。">
+        <a id="refresh" href="#" class="btn btn-link btn-primary">
+          <i class="fas fa-sync fa-fw"></i>
+          <span>重新刷新</span>
+        </a>
+      </fieldset>
+
+      <div class="clearfix">
+        <label class="custom-control custom-checkbox pull-xs-left">
+          <input type="checkbox" name="rememberme" value="1" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          在這台電腦上記住我
+        </label>
+        <a href="#" class="font-size-12 text-muted pull-xs-right" id="page-signin-forgot-link">忘記密碼？</a>
+      </div>
+
+      <button type="submit" class="btn btn-block btn-lg btn-primary m-t-3">登入</button>
+      </form>
+
+      <form action="get_password.php" method="post" name="the-form" autocomplete="off" class="p-a-4" id="page-forgot-form">
+      <input type="hidden" name="action" value="get_pwd">
+      <h4 class="m-t-0 m-b-4 text-xs-center font-weight-semibold">重設密碼</h4>
+
+      <fieldset class="page-signin-form-group form-group form-group-lg">
+        <div class="page-signin-icon text-muted"><i class="fas fa-envelope"></i></div>
+        <input type="email" name="email" class="page-signin-form-control form-control" placeholder="您的電子郵件">
+      </fieldset>
+
+      <button type="submit" class="btn btn-block btn-lg btn-primary m-t-3">發送密碼重置鏈接</button>
+      <div class="m-t-2 text-muted">
+        <a href="#" id="page-signin-forgot-back">&larr; 返回</a>
+      </div>
+      </form>
+
+      <!-- {^elseif $smarty.const.SCRIPT_NAME eq 'get_password'^} -->
+      <form action="get_password.php" method="post" name="the-form" autocomplete="off" class="p-a-4" id="page-password-form">
+      <input name="action" type="hidden" value="reset_pwd">
+      <input name="code" type="hidden" value="{^$smarty.get.code|default^}">
+      <input name="uid" type="hidden" value="{^$smarty.get.uid|default^}">
+      <h4 class="m-t-0 m-b-4 text-xs-center font-weight-semibold">密碼重置</h4>
+
+      <fieldset class="page-signin-form-group form-group form-group-lg">
+        <div class="page-signin-icon text-muted"><i class="fas fa-lock"></i></div>
+        <input type="password" name="new_password" class="page-signin-form-control form-control" placeholder="登入密碼">
+      </fieldset>
+
+      <fieldset class="page-signin-form-group form-group form-group-lg">
+        <div class="page-signin-icon text-muted"><i class="fas fa-retweet"></i></div>
+        <input type="password" name="confirm_password" class="page-signin-form-control form-control" placeholder="確認密碼">
+      </fieldset>
+
+      <button type="submit" class="btn btn-block btn-lg btn-primary m-t-3">
+        <i class="fas fa-share"></i>
+        送出
+      </button>
+      <div class="m-t-2 text-muted">
+        <a href="privilege.php?action=login">&larr; 登入平台</a>
+      </div>
+      </form>
+      <!-- {^/if^} -->
+    </div>
+  </div>
+</div>
+<div id="px-sidebar" class="px-sidebar-right bg-primary" ng-controller="UISettingsCtrl as vm">
+  <a href="#" id="px-sidebar-toggle" class="bg-primary b-y-1 b-l-1 text-default" data-toggle="sidebar" data-target="#px-sidebar"><i class="fas fa-cog"></i><i class="fas fa-times"></i></a>
+  <div id="px-sidebar-loader" class="form-loading form-loading-inverted"></div>
+  <div class="px-sidebar-content">
+    <h6 class="px-sidebar-header bg-primary darker b-y-1">THEMES</h6>
+    <div class="px-themes-list clearfix bg-primary">
+      <!-- {^foreach from=['default'=>'Default','asphalt'=>'Asphalt','purple-hills'=>'Purple Hills','adminflare'=>'Adminflare','dust'=>'Dust','frost'=>'Frost','fresh'=>'Fresh','silver'=>'Silver','clean'=>'Clean','white'=>'White','candy-black'=>'Candy Black','candy-blue'=>'Candy Blue','candy-red'=>'Candy Red','candy-orange'=>'Candy Orange','candy-green'=>'Candy Green','candy-purple'=>'Candy Purple','candy-cyan'=>'Candy Cyan','mint-dark'=>'Mint Dark','dark-blue'=>'Dark Blue','dark-red'=>'Dark Red','dark-orange'=>'Dark Orange','dark-green'=>'Dark Green','dark-purple'=>'Dark Purple','dark-cyan'=>'Dark Cyan','darklight-blue'=>'Darklight Blue','darklight-red'=>'Darklight Red','darklight-orange'=>'Darklight Orange','darklight-green'=>'Darklight Green','darklight-purple'=>'Darklight Purple','darklight-cyan'=>'Darklight Cyan'] key=value item=$label^} -->
+      <label class="px-themes-item">
+        <input type="radio" class="px-themes-toggler" name="px-current-theme" value="{^$value^}">
+        <img src="assets/images/themes/{^$value^}.png" class="px-themes-thumbnail">
+        <div class="px-themes-title font-weight-semibold">
+          <span class="text-white">{^$label^}</span>
+          <div class="bg-primary"></div>
+        </div>
+      </label>
+      <!-- {^/foreach^} -->
+    </div>
+  </div>
+</div>
+<script async src="assets/js/plugins/require.min.js" data-main="assets/js/require-config.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!-- {^if not $is_authorize^} -->
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Meta -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>{^$shop_name^}</title>
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon">
+<link href="favicon.ico" rel="shortcut icon">
+<link href="apple-touch-icon.png" rel="apple-touch-icon">
+<!-- Web Fonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Noto+Sans|Noto+Sans+TC:100,300,400,500,700,900|Noto+Sans+SC:100,300,400,500,700,900&display=swap" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+<!-- CSS RWD Core -->
+{^assign var="layout_theme" value=$ui_layout_cfg['theme']|default:'default'^}
+<!-- {^foreach from=['bs'=>'bootstrap','core'=>'pixeladmin','widgets'=>'widgets'] key=key item=val^} -->
+<link href="assets/css/{^$val^}{^if preg_match('/dark/i',$layout_theme)^}-dark{^/if^}{^if $ui_layout_cfg['rtl']|default^}.rtl{^/if^}.min.css" rel="stylesheet" class="px-stylesheet-{^$key^}">
+<!-- {^/foreach^} -->
+<!-- CSS Themes -->
+<link href="assets/css/themes/{^$layout_theme^}.min.css" rel="stylesheet" class="px-stylesheet-theme">
+<!-- CSS Customization -->
+<link href="assets/css/custom.css" rel="stylesheet">
+<script src="assets/js/plugins/pace.min.js"></script>
+</head>
+<body>
+<nav class="navbar px-navbar">
+<!-- {^include file="common/navbar.html"^} -->
+</nav>
+<div class="px-content">
+<!-- {^/if^} -->
+
+  <div class="error-container" ng-controller="MessageCtrl as vm">
+    <div class="well">
+      <h1 class="grey lighter smaller">
+        <!-- {^if $msg_type eq 0^} -->
+        <span class="blue bigger-125">
+          <i class="fas fa-info-circle"></i>
+        </span>
+        資訊
+        <!-- {^elseif $msg_type eq 1^} -->
+        <span class="blue bigger-125">
+          <i class="fas fa-exclamation-triangle"></i>
+        </span>
+        警告
+        <!-- {^else^} -->
+        <span class="blue bigger-125">
+          <i class="fas fa-check"></i>
+        </span>
+        確認
+        <!-- {^/if^} -->
+      </h1>
+      <hr>
+      <h3 class="lighter smaller">{^$msg_detail^}</h3>
+      <!-- {^if $auto_redirect^} -->
+      <h4 id="redirection-msg" class="smaller">如果您不做出選擇，將在 <span id="msg-seconds">3</span> 秒後自動跳到下方的第一個選項。</h4>
+      <!-- {^/if^} -->
+      <!-- {^if $links^} -->
+      <ul id="msg-url" class="list-unstyled spaced inline bigger-110 margin-15">
+        <!-- {^foreach from=$links item=item name=links^} -->
+        <li>
+          <i class="far fa-hand-point-right fa-fw blue"></i>
+          <a href="{^$item.href|default:'#'^}"{^if isset($item.sref)^} data-ui-sref='{^$item.sref^}' data-ui-sref-opts='{"reload":"{^$item.sref|regex_replace:'/\(.*\)$/':''^}","inherit":false}'{^/if^}>{^$item.text^}</a>
+        </li>
+        <!-- {^/foreach^} -->
+      </ul>
+      <!-- {^/if^} -->
+      <hr>
+    </div>
+  </div>
+
+<!-- {^if not $is_authorize^} -->
+</div>
+<script async src="assets/js/plugins/require.min.js" data-main="assets/js/require-config.js"></script>
+</body>
+</html>
+<!-- {^/if^} -->

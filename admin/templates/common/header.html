@@ -1,0 +1,44 @@
+<div class="page-header"{^if $controller^} ng-controller="{^$controller^}Ctrl as vm"{^/if^}>
+  <h1 data-assign-query-info="{^$query_info|default^}" data-assign-gzip-enabled="{^$gzip_enabled|default^}" data-assign-memory-info="{^$memory_info|default^}">
+    {^$action_title|default:$smarty.const.SCRIPT_TITLE^}
+    <!-- {^if isset($action_desc) or $smarty.request.action|in_array:['list','add','edit','copy','move']^} -->
+    <small class="hidden-480">
+      <i class="fas fa-angle-double-right fa-fw"></i>
+      <!-- {^if isset($action_desc)^} -->
+      {^$action_desc^}
+      <!-- {^elseif $smarty.request.action eq 'list'^} -->
+      列表
+      <!-- {^elseif $smarty.request.action eq 'add'^} -->
+      新增
+      <!-- {^elseif $smarty.request.action eq 'edit'^} -->
+      編輯
+      <!-- {^elseif $smarty.request.action eq 'copy'^} -->
+      複製
+      <!-- {^elseif $smarty.request.action eq 'move'^} -->
+      轉移
+      <!-- {^/if^} -->
+    </small>
+    <!-- {^/if^} -->
+  </h1>
+  <!-- {^if isset($action_link)^} -->
+  <div class="pull-right hidden-xs">
+    <!-- {^foreach from=$action_link item=item^} -->
+    <a href="{^$item.href|default:'#'^}"{^if isset($item.sref)^} ui-sref='{^$item.sref^}' ui-sref-opts="{inherit:false}"{^/if^} title="{^$item.text|escape^}" class="btn btn-primary btn-bold{^if isset($item.style)^} {^$item.style^}{^/if^}"{^if $item.target|default^} target="{^$item.target^}"{^/if^}>
+      <i class="{^$item.icon|default:'fab fa-delicious fa-fw'^}"></i>
+      <span class="hidden-xs">&nbsp;{^$item.text|escape^}</span>
+    </a>
+    <!-- {^/foreach^} -->
+  </div>
+  <div class="pull-right pos-rel visible-xs dropdown">
+    <button type="button" class="btn btn-primary btn-outline btn-outline-colorless dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      <i class="fas fa-server fa-fw"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <!-- {^foreach from=$action_link|array_reverse item=item^} -->
+      <li><a href="{^$item.href|default:'#'^}"{^if isset($item.sref)^} ui-sref='{^$item.sref^}' ui-sref-opts="{inherit:false}"{^/if^} title="{^$item.text|escape^}"{^if $item.target|default^} target="{^$item.target^}"{^/if^}><i class="dropdown-icon {^$item.icon|default:'fab fa-delicious fa-fw'^}"></i>&nbsp;&nbsp;{^$item.text|escape^}</a>
+      </li>
+      <!-- {^/foreach^} -->
+    </ul>
+  </div>
+  <!-- {^/if^} -->
+</div>

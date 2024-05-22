@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <common>
+    <sys_msg>系統提示</sys_msg>
+    <process_request>正在處理您的請求...</process_request>
+    <please_waiting>請稍等，正在載入中...</please_waiting>
+    <home>首頁</home>
+    <back_home>返回首頁</back_home>
+    <back_up_page>返回上一頁</back_up_page>
+    <err_unknown>很抱歉，系統發生錯誤，請稍後再試或聯絡客服人員</err_unknown>
+    <captcha_not_filled>請輸入驗證碼</captcha_not_filled>
+    <invalid_captcha>驗證密碼不正確</invalid_captcha>
+    <email_not_filled>電子信箱未填寫</email_not_filled>
+    <email_incorrect_format>電子信箱格式不正確</email_incorrect_format>
+    <err_operation_timeout>操作逾時，請重新操作</err_operation_timeout>
+    <err_access_deny>您必須先登入會員才能執行這個動作</err_access_deny>
+    <err_send_mail>很抱歉，發送郵件失敗，請與客服人員聯絡</err_send_mail>
+    <err_data_not_found>找不到指定的資料，請重新檢查連結</err_data_not_found>
+    <err_operation_deny>操作拒絕</err_operation_deny>
+    <info_operation_done>操作完成</info_operation_done>
+    <time_expired_or_url_error>驗證密碼不正確</time_expired_or_url_error>
+  </common>
+</translations>

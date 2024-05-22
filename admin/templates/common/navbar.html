@@ -1,0 +1,46 @@
+<!-- Header -->
+<div class="navbar-header">
+  <a class="navbar-brand px-brand" href="./"><span class="px-logo bg-primary"><span class="px-logo-1"></span><span class="px-logo-2"></span><span class="px-logo-3"></span><span class="px-logo-4"></span><span class="px-logo-5"></span><span class="px-logo-6"></span><span class="px-logo-7"></span><span class="px-logo-8"></span><span class="px-logo-9"></span></span>{^$shop_name|escape^}</a>
+</div>
+
+<!-- {^if $is_authorize^} -->
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#px-navbar-collapse" aria-expanded="false"><i class="navbar-toggle-icon"></i></button>
+
+<div class="collapse navbar-collapse" id="px-navbar-collapse">
+  <ul class="nav navbar-nav">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-map-signs fa-fw"></i>&nbsp;Links</a>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="#" ui-sref="clear_cache" ui-sref-opts="{reload:'clear_cache',inherit:false}">
+            <i class="fas fa-paint-brush fa-fw"></i>
+            &nbsp;清除快取檔
+          </a>
+        </li>
+        <li>
+          <a href="#send-mail-queue">
+            <i class="far fa-paper-plane fa-fw"></i>
+            &nbsp;發送佇列
+          </a>
+        </li>
+        <li>
+          <a href="#batch-file-upload">
+            <i class="fas fa-cloud-upload-alt fa-fw"></i>
+            &nbsp;批次檔案上傳
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a href="{^$smarty.const.BASE_URL^}" target="_blank">
+            <i class="fas fa-globe fa-fw"></i>
+            &nbsp;瀏覽網站
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+    <!-- {^insert name='profile'^} -->
+  </ul>
+</div>
+<!-- {^/if^} -->

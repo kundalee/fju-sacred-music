@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!-- Meta -->
+{^assign
+  var="nav_breadcrumb"
+  value=[['text'=>'最新消息']]
+^}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="{^$keywords|default^}">
+<meta name="description" content="{^$description|default|strip:''^}">
+<meta name="twitter:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta name="twitter:keywords" content="{^$keywords|default^}">
+<meta name="twitter:description" content="{^$description|default|strip:''^}">
+<meta name="twitter:site" content="{^link^}">
+<meta property="og:title" content="{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}">
+<meta property="og:keywords" content="{^$keywords|default^}">
+<meta property="og:description" content="{^$description|default|strip:''^}">
+<meta property="og:url" content="{^link^}">
+<title>{^breadcrumb_meta main=$shop_name extra=$nav_breadcrumb^}</title>
+<base href="{^insert name='base_url' nocache=true^}" data-theme="{^$theme_dir|default^}" data-lang="{^$lang_code|default^}">
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon">
+<link href="favicon.ico" rel="shortcut icon">
+<link href="favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
+<link href="favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
+<link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+<link href="site.webmanifest" rel="manifest">
+<!-- Web Fonts -->
+<!-- CSS RWD Core -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- CSS Plugins -->
+<link href="assets/css/plugins.min.css" rel="stylesheet">
+<!-- CSS Customization -->
+<link href="assets/css/custom.min.css" rel="stylesheet">
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_head|default^}
+<!-- {^/if^} -->
+</head>
+<body>
+<main>
+  <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+  <div class="body-container">
+    <div class="page-banner-frame" data-parallax="scroll" data-image-src="assets/images/page-banner-06.jpg">
+      <div class="mask"></div>
+      <h1>最新消息</h1>
+    </div>
+    <section class="page-blog-wrapper">
+      <div class="container-frame">
+
+        <div class="page-container">
+          <div class="page-left-content blog-list-frame">
+            <!-- {^foreach from=$item_arr item=item name=list^} -->
+            <article class="col-item">
+              <figure class="item-frame">
+                <a href="{^$item.url^}"{^if $item.open_type eq 1^} target="_blank"{^/if^} class="bd-picture">
+                  <!-- {^if $item.img_url^} -->
+                  <div class="td-bg" data-bg-src="{^$smarty.const.BASE_URI^}{^$item.img_url^}"><img src="assets/images/default-800x450.png" data-src="{^$smarty.const.BASE_URI^}{^$item.img_url^}" class="img-lazy" width="800" height="450" alt="{^$item.title|escape^}"><noscript><img alt="{^$item.title|escape^}" src="{^$smarty.const.BASE_URI^}{^$item.img_url^}" width="800" height="450"></noscript></div>
+                  <!-- {^else^} -->
+                  <div class="td-bg" data-bg-src="assets/images/default-800x450.png"><img src="assets/images/default-800x450.png" class="img-lazy" width="800" height="450" alt="{^$item.title|escape^}"><noscript><img alt="{^$item.title|escape^}" src="assets/images/default-800x450.png" width="800" height="450"></noscript></div>
+                  <!-- {^/if^} -->
+                  <time datetime="{^$item.release_start_time|date_format:'%Y-%m-%d'^}" class="td-date d-flex justify-content-center flex-column-reverse"><span class="d-down">{^$item.release_start_time|date_format:'%Y.%m'^}</span><span class="d-up">{^$item.release_start_time|date_format:'%d'^}</span></time>
+                </a>
+                <figcaption class="bd-textarea">
+                  <!-- {^if $item.relation_category or $item.relation_tags^} -->
+                  <ul class="td-category">
+                    <!-- {^foreach from=$item.relation_category item=item^} -->
+                    <li><a title="{^$item.cat_name|escape^}" href="{^$item.url^}"><i class="fas fa-sitemap"></i> {^$item.cat_name|escape^}</a></li>
+                    <!-- {^/foreach^} -->
+                    <!-- {^foreach from=$item.relation_tags item=item^} -->
+                    <li><a title="{^$item.tag_name|escape^}" href="{^$item.url^}"><i class="fas fa-tag"></i> {^$item.tag_name|escape^}</a></li>
+                    <!-- {^/foreach^} -->
+                  </ul>
+                  <!-- {^/if^} -->
+                  <h2 class="td-title"><a href="{^$item.url^}"{^if $item.open_type eq 1^} target="_blank"{^/if^}>{^$item.title|escape^}</a></h2>
+                  <p class="td-summary">{^$item.brief|escape|nl2br:false^}</p>
+                  <a href="{^$item.url^}"{^if $item.open_type eq 1^} target="_blank"{^/if^} class="td-button">詳細閱讀</a>
+                </figcaption>
+              </figure>
+            </article>
+            <!-- {^/foreach^} -->
+            <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+          </div>
+          <aside class="page-right-sidebar">
+            <div class="no-fixed-right-sidebar">
+              <!-- {^nocache^} -->
+              <!-- {^if $recommend_bulletin^} -->
+              <div class="widget-frame widget-categorys">
+                <div class="widget-title">精選文章</div>
+                <ul class="widget-list">
+                  <!-- {^foreach from=$recommend_bulletin item=item^} -->
+                  <li><a title="{^$item.title|escape^}" href="{^$item.url^}"{^if $item.open_type eq 1^} target="_blank"{^/if^}>{^$item.title|escape^}</a></li>
+                  <!-- {^/foreach^} -->
+                </ul>
+              </div>
+              <!-- {^/if^} -->
+              <!-- {^/nocache^} -->
+              <div class="widget-frame widget-categorys">
+                <div class="widget-title">分類</div>
+                <ul class="widget-list">
+                  <!-- {^foreach from=$nav_bulletin_category item=c1^} -->
+                  <li><a title="{^$c1.cat_name|escape^}" href="{^$c1.url^}">{^$c1.cat_name|escape^}</a></li>
+                  <!-- {^/foreach^} -->
+                </ul>
+              </div>
+              <!-- {^if $nav_tags^} -->
+              <div class="widget-frame widget-tabs">
+                <div class="widget-title">標籤</div>
+                <ul class="widget-list">
+                  <!-- {^foreach from=$nav_tags item=item^} -->
+                  <li><a title="{^$item.tag_name|escape^}" href="{^$item.url^}">{^$item.tag_name|escape^}</a></li>
+                  <!-- {^/foreach^} -->
+                </ul>
+              </div>
+              <!-- {^/if^} -->
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</main>
+<script async src="assets/js/plugins/require.min.js" data-main="assets/js/require-config.js"></script>
+<!-- {^if $smarty.const.DEMO_MODE|default:false eq false^} -->
+{^$stats_code_body|default^}
+<!-- {^/if^} -->
+</body>
+</html>

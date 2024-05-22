@@ -1,0 +1,14 @@
+{
+    "config": {
+        "platform": {
+            "php": "7.3.0"
+        }
+    },
+    "require": {
+        "smarty/smarty": "^4.0",
+        "sybio/image-workshop": "^2.2",
+        "phpmailer/phpmailer": "^6.5",
+        "phpoffice/phpspreadsheet": "^1.20",
+        "rosell-dk/webp-convert": "^2.9"
+    }
+}

@@ -1,0 +1,69 @@
+<!-- {^include file="common/breadcrumb.html"^} -->
+<!-- {^include file="common/header.html" controller="GoodsTagForm"^} -->
+<div class="panel">
+  <form method="post" name="the-form" action="{^$smarty.server.SCRIPT_FILENAME|basename^}" class="form-horizontal">
+  <input type="hidden" name="action" value="{^$form_action^}">
+  <input type="hidden" name="tag_id" value="{^$data.tag_id^}">
+  <div class="panel-body tabbable">
+    <ul class="nav nav-tabs nav-tabs-simple" data-plugins="tools-tabs"{^if $data.tag_id^} data-page-code="{^$smarty.const.SCRIPT_NAME^}-id-{^$data.tag_id^}"{^/if^}>
+      <li>
+        <a href="#edit-general">
+          <i class="fas fa-edit fa-fw"></i>
+          一般資料
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="edit-general" class="tab-pane in active">
+        <div class="space-6"></div>
+        <div class="row">
+          <div class="col-lg-11">
+            <div class="form-group has-info">
+              <label class="col-md-2 control-label no-padding-right">名稱</label>
+              <div class="col-md-10">
+                <input type="text" name="tag_name" value="{^$data.tag_name|default|escape^}" class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">排序</label>
+                  <div class="col-md-8">
+                    <input type="text" name="sort_order" value="{^$data.sort_order^}" maxlength="5" class="form-control text-center" data-plugins="touchspin" data-options="{'min':'0','max':'32767'}">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-4 control-label no-padding-right">是否顯示</label>
+                  <div class="col-md-8">
+                    <label class="switcher switcher-rounded switcher-blank">
+                      <input type="checkbox" name="is_show" value="1"{^if $data.is_show eq 1^} checked{^/if^}>
+                      <div class="switcher-indicator">
+                        <div class="switcher-yes">
+                          <i class="fas fa-check"></i>
+                        </div>
+                        <div class="switcher-no">
+                          <i class="fas fa-times"></i>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="panel-footer text-center">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <i class="far fa-save fa-fw"></i>
+      儲存
+    </button>
+  </div>
+  </form>
+</div>

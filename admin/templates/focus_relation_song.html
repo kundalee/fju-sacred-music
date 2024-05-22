@@ -1,0 +1,69 @@
+<!-- {^strip^} -->
+<!-- {^if $tpl eq 'relation'^} -->
+<table class="table table-striped table-bordered table-hover">
+  <thead class="thin-border-bottom">
+    <tr>
+      <th class="text-center px-width-30"></th>
+      <th class="text-center px-width-45">圖片</th>
+      <th class="text-center">歌曲內號/歌曲名稱</th>
+      <th class="text-center px-width-100">歌曲排序</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- {^foreach from=$item_arr item=item^} 輸出資料 -->
+    <tr data-item-id="{^$item.song_id^}">
+      <td class="text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" name="update_song[]" value="{^$item.song_id^}" data-row-multi="true" class="custom-control-input ajax-update-define-song">
+          <span class="custom-control-indicator"></span>
+        </label>
+      </td>
+      <td class="text-center">
+        <!-- {^if $item.picture_thumb^} -->
+        <img src="{^$smarty.const.BASE_URL^}{^$item.picture_thumb^}" width="40" alt="{^$item.zh_song_title|default:$item.en_song_title_1|default:$item.en_song_title_2|escape^}">
+        <!-- {^/if^} -->
+      </td>
+      <td>
+        <strong>{^$item.song_code^}</strong><br>
+        {^$item.zh_song_title|default:$item.en_song_title_1|default:$item.en_song_title_2|escape^}
+      </td>
+      <td class="text-right"><span data-cell-edit="sort_code">{^$item.sort_order^}</span></td>
+    </tr>
+    <!-- {^/foreach^} -->
+  </tbody>
+</table>
+<!-- {^else^} -->
+<table class="table table-striped table-bordered table-hover">
+  <thead class="thin-border-bottom">
+    <tr>
+      <th class="text-center px-width-30"></th>
+      <th class="text-center px-width-45">圖片</th>
+      <th class="text-center">歌曲內號/歌曲名稱</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- {^foreach from=$item_arr item=item^} 輸出資料 -->
+    <tr>
+      <td class="text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" name="join_song[]" value="{^$item.song_id^}" data-row-multi="true" class="custom-control-input ajax-add-define-song">
+          <span class="custom-control-indicator"></span>
+        </label>
+      </td>
+      <td class="text-center">
+        <!-- {^if $item.picture_thumb^} -->
+        <img src="{^$smarty.const.BASE_URL^}{^$item.picture_thumb^}" width="40" alt="{^$item.zh_song_title|default:$item.en_song_title_1|default:$item.en_song_title_2|escape^}">
+        <!-- {^/if^} -->
+      </td>
+      <td>
+        <strong>{^$item.song_code|escape^}</strong><br>
+        <span data-field-type="name">{^$item.zh_song_title|default:$item.en_song_title_1|default:$item.en_song_title_2|escape^}</span>
+      </td>
+    </tr>
+    <!-- {^foreachelse^} -->
+    <tr><td class="text-center" colspan="6">目前沒有任何記錄</td></tr>
+    <!-- {^/foreach^} -->
+  </tbody>
+</table>
+<!-- {^/if^} -->
+<!-- {^/strip^} -->
